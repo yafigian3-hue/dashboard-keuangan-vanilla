@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Keuangan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- LOGIN -->
+    <div id="loginPage" class="flex items-center justify-center min-h-screen">
+      <form id="loginForm" class="bg-white p-6 rounded shadow w-80 space-y-4">
+        <h1 class="text-xl font-bold text-center">Login Dashboard</h1>
+        <input
+          type="text"
+          id="username"
+          placeholder="Username"
+          class="border p-2 rounded w-full"
+          required
+        />
+        <button
+          type="submit"
+          class="bg-blue-600 text-white w-full py-2 rounded"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboardPage" class="hidden">
+      <div class="max-w-4xl mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold">Dashboard Keuangan</h1>
+          <button id="logoutBtn" class="text-red-600 font-semibold">
+            Logout
+          </button>
+        </div>
+
+        <!-- Saldo -->
+        <div class="bg-white p-4 rounded shadow mb-6">
+          <p class="text-gray-500">Saldo Saat Ini</p>
+          <h2 id="balance" class="text-3xl font-bold text-green-600">Rp 0</h2>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white p-4 rounded shadow mb-6">
+          <form id="transactionForm" class="flex flex-col md:flex-row gap-4">
+            <input
+              type="text"
+              id="name"
+              placeholder="Nama transaksi"
+              class="border p-2 rounded w-full"
+              required
+            />
+            <input
+              type="number"
+              id="amount"
+              placeholder="Jumlah"
+              class="border p-2 rounded w-full"
+              required
+            />
+            <select id="type" class="border p-2 rounded">
+              <option value="income">Pemasukan</option>
+              <option value="expense">Pengeluaran</option>
+            </select>
+            <button
+              type="submit"
+              class="bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Tambah
+            </button>
+          </form>
+        </div>
+
+        <!-- List -->
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="font-semibold mb-4">Riwayat Transaksi</h3>
+          <ul id="transactionList" class="space-y-2"></ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
