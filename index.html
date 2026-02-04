@@ -43,6 +43,30 @@
           <h2 id="balance" class="text-3xl font-bold text-green-600">Rp 0</h2>
         </div>
 
+        <!-- filter & statistik -->
+         <div class="bg-white p-4 rounded shadow mb-6 space-y-4">
+          <!-- filter -->
+           <div class="flex gap-2">
+            <button onclick="setFilter('all')" class="px-3 py-1 border rounded">
+              Semua
+            </button>
+
+            <button onclick="setFilter('income')" class="px-3 py-1 border rounded text-green-600">
+              Pemasukan
+            </button>
+
+            <button onclick="setFilter('expense')" class="px-3 py-1 border rounded text-red-600">
+              Pengeluaran
+            </button>
+           </div>
+
+           <!-- statistik -->
+            <div class="flex justify-between">
+              <p>Total pemasukan <span id="totalIncome">Rp 0</span></p>
+              <p>Total Pengeluaran <span id="totalExpense">Rp 0</span></p>
+            </div>
+         </div>
+
         <!-- Form -->
         <div class="bg-white p-4 rounded shadow mb-6">
           <form id="transactionForm" class="flex flex-col md:flex-row gap-4">

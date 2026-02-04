@@ -34,16 +34,12 @@ function checkAuth() {
 
 /* Load data per user */
 function loadTransactions() {
-  transactions =
-    JSON.parse(localStorage.getItem(getStorageKey())) || [];
+  transactions = JSON.parse(localStorage.getItem(getStorageKey())) || [];
 }
 
 /* Save data */
 function saveTransactions() {
-  localStorage.setItem(
-    getStorageKey(),
-    JSON.stringify(transactions)
-  );
+  localStorage.setItem(getStorageKey(), JSON.stringify(transactions));
 }
 
 /*hapus Transaksi*/
@@ -64,39 +60,66 @@ function editTransaction(index) {
   editIndex = index;
 }
 
+/* filter */
+let currentFilter = "all";
+
+function setFilter(type) {
+  currentFilter = type;
+  render();
+}
+
 /* Render UI */
 function render() {
   list.innerHTML = "";
-  let balance = 0;
 
-  transactions.forEach((trx, index) => {
+  let balance = 0;
+  let totalIncome = 0;
+  let totalExpense = 0;
+
+  const filteredTransactions =
+    currentFilter === "all"
+      ? transactions
+      : transactions.filter((trx) => trx.type === currentFilter);
+
+  filteredTransactions.forEach((trx) => {
+    const realIndex = transactions.indexOf(trx);
+
     const li = document.createElement("li");
-    li.className =
-      "flex justify-between items-center p-2 border rounded";
+    li.className = "flex justify-between items-center p-2 border rounded";
 
     const sign = trx.type === "income" ? "+" : "-";
-    const color =
-      trx.type === "income" ? "text-green-600" : "text-red-600";
+    const color = trx.type === "income" ? "text-green-600" : "text-red-600";
 
-    balance +=
-      trx.type === "income"
-        ? trx.amount
-        : -trx.amount;
+    if (trx.type === "income") {
+      balance += trx.amount;
+      totalIncome += trx.amount;
+    } else {
+      balance -= trx.amount;
+      totalExpense += trx.amount;
+    }
 
     li.innerHTML = `
       <div>
-      <p class="font-semibold">${trx.name}</p>
-      <p class="${color}">${sign} Rp ${trx.amount}</p>
+        <p class="font-semibold">${trx.name}</p>
+        <p class="${color}">
+          ${sign} Rp ${trx.amount}
+        </p>
       </div>
 
       <div class="space-x-2">
-      <button onclick="editTransaction(${index})" class="text-blue-600">
-      Edit
-      </button>
+        <button
+          onclick="editTransaction(${realIndex})"
+          class="text-blue-600"
+        >
+          Edit
+        </button>
 
-      <button onclick="deleteTransaction(${index})" class="text-red-600">
-      Hapus
-      </button>
+        <button
+          onclick="deleteTransaction(${realIndex})"
+          class="text-red-600"
+        >
+          Hapus
+        </button>
       </div>
     `;
 
@@ -104,13 +127,14 @@ function render() {
   });
 
   balanceEl.textContent = `Rp ${balance}`;
+  document.getElementById("totalIncome").textContent = `Rp ${totalIncome}`;
+  document.getElementById("totalExpense").textContent = `Rp ${totalExpense}`;
 }
 
 /* Login */
 loginForm.addEventListener("submit", function (e) {
   e.preventDefault();
-  const username =
-    document.getElementById("username").value.trim();
+  const username = document.getElementById("username").value.trim();
 
   if (!username) return;
 
@@ -132,13 +156,11 @@ form.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const name = document.getElementById("name").value;
-  const amount = Number(
-    document.getElementById("amount").value
-  );
+  const amount = Number(document.getElementById("amount").value);
   const type = document.getElementById("type").value;
 
   if (editIndex !== null) {
-    transactions[editIndex] = {name, amount, type};
+    transactions[editIndex] = { name, amount, type };
     editIndex = null;
   } else {
     transactions.push({ name, amount, type });
