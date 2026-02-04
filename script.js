@@ -5,6 +5,7 @@ const loginForm = document.getElementById("loginForm");
 const logoutBtn = document.getElementById("logoutBtn");
 
 let currentUser = localStorage.getItem("currentUser");
+let editIndex = null;
 
 /* ===== DASHBOARD ===== */
 const form = document.getElementById("transactionForm");
@@ -45,12 +46,30 @@ function saveTransactions() {
   );
 }
 
+/*hapus Transaksi*/
+function deleteTransaction(index) {
+  transactions.splice(index, 1);
+  saveTransactions();
+  render();
+}
+
+/* Edit transaksi */
+function editTransaction(index) {
+  const trx = transactions[index];
+
+  document.getElementById("name").value = trx.name;
+  document.getElementById("amount").value = trx.amount;
+  document.getElementById("type").value = trx.type;
+
+  editIndex = index;
+}
+
 /* Render UI */
 function render() {
   list.innerHTML = "";
   let balance = 0;
 
-  transactions.forEach((trx) => {
+  transactions.forEach((trx, index) => {
     const li = document.createElement("li");
     li.className =
       "flex justify-between items-center p-2 border rounded";
@@ -65,10 +84,20 @@ function render() {
         : -trx.amount;
 
     li.innerHTML = `
-      <span>${trx.name}</span>
-      <span class="${color}">
-        ${sign} Rp ${trx.amount}
-      </span>
+      <div>
+      <p class="font-semibold">${trx.name}</p>
+      <p class="${color}">${sign} Rp ${trx.amount}</p>
+      </div>
+
+      <div class="space-x-2">
+      <button onclick="editTransaction(${index})" class="text-blue-600">
+      Edit
+      </button>
+
+      <button onclick="deleteTransaction(${index})" class="text-red-600">
+      Hapus
+      </button>
+      </div>
     `;
 
     list.appendChild(li);
@@ -108,7 +137,12 @@ form.addEventListener("submit", function (e) {
   );
   const type = document.getElementById("type").value;
 
-  transactions.push({ name, amount, type });
+  if (editIndex !== null) {
+    transactions[editIndex] = {name, amount, type};
+    editIndex = null;
+  } else {
+    transactions.push({ name, amount, type });
+  }
 
   saveTransactions();
   form.reset();
