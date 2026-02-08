@@ -96,7 +96,8 @@ function renderDashboard() {
   let expense = 0;
 
   data.forEach((t) => {
-    t.type === "income" ? (income += t.amount) : (expense += t.amount);
+    if (t.type === "income") income += t.amount;
+    else expense += t.amount;
   });
 
   const balanceEl = document.getElementById("balance");
@@ -129,13 +130,16 @@ function renderChart(income, expense) {
         {
           data: [income, expense],
           backgroundColor: ["#16a34a", "#dc2626"],
+          borderRadius: 8,
         },
       ],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+      },
     },
   });
 }

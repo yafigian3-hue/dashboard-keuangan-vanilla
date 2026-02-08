@@ -46,25 +46,27 @@
         ☰ Menu
       </button>
 
-      <!-- SALDO -->
-      <div class="bg-white p-4 rounded shadow">
-        <p class="text-gray-500">Saldo Saat Ini</p>
-        <h2 id="balance" class="text-3xl font-bold text-green-600">Rp 0</h2>
-      </div>
-
-      <!-- STATISTIK -->
-      <div class="bg-white p-4 rounded shadow flex justify-between">
-        <p>Pemasukan : <span id="totalIncome">Rp 0</span></p>
-        <p>Pengeluaran : <span id="totalExpense">Rp 0</span></p>
-      </div>
-
-      <!-- GRAFIK -->
-      <div class="bg-white p-4 rounded shadow">
-        <h2 class="font-semibold mb-4">Grafik Keuangan</h2>
-        <div class="relative h-64">
-          <canvas id="financeChart"></canvas>
+      <!-- SUMMARY -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-sm text-gray-500">Saldo</p>
+          <p id="balance" class="text-blue-600 text-xl font-bold">Rp0</p>
         </div>
-        <ul id="transactionList" class="space-y-2"></ul>
+
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-sm text-gray-500">Pemasukan</p>
+          <p id="totalIncome" class="text-green-600 text-xl font-bold">Rp0</p>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-sm text-gray-500">Pengeluaran</p>
+          <p id="totalExpense" class="text-red-600 text-xl font-bold">Rp0</p>
+        </div>
+      </div>
+
+      <!-- CHART -->
+      <div class="bg-white p-4 rounded shadow h-[300px]">
+        <canvas id="financeChart"></canvas>
       </div>
     </main>
 
