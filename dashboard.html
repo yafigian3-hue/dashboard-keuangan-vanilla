@@ -14,11 +14,14 @@
       <h1 class="font-bold text-xl mb-6">💰 Keuangan</h1>
 
       <nav class="space-y-2">
-        <a href="dashboard.html" class="block px-3 py-2 rounded bg-blue-100">
+        <a
+          href="dashboard.html"
+          class="block px-3 py-2 rounded hover:bg-gray-100"
+        >
           Dashboard
         </a>
 
-        <a href="#transaksi" class="block px-3 py-2 rounded hover:bg-gray-100">
+        <a href="transaksi.html" class="block px-3 py-2 rounded bg-blue-100">
           Transaksi
         </a>
 
@@ -55,45 +58,7 @@
         </div>
       </div>
 
-      <!-- TRANSAKSI -->
-      <div id="transaksi" class="bg-white p-4 rounded shadow space-y-4">
-        <form id="transactionForm" class="grid grid-cols-4 gap-3">
-          <input
-            id="name"
-            placeholder="Nama"
-            class="border p-2 rounded"
-            required
-          />
-          <input
-            id="amount"
-            type="number"
-            placeholder="Jumlah"
-            class="border p-2 rounded"
-            required
-          />
-
-          <select id="type" class="border p-2 rounded">
-            <option value="income">Pemasukan</option>
-            <option value="expense">Pengeluaran</option>
-          </select>
-
-          <button class="bg-blue-600 text-white rounded">Tambah</button>
-        </form>
-
-        <div class="flex gap-2">
-          <button id="tabAll" class="px-3 py-1 rounded bg-blue-600 text-white">
-            Semua
-          </button>
-          <button id="tabIncome" class="px-3 py-1 rounded bg-gray-200">
-            Pemasukan
-          </button>
-          <button id="tabExpense" class="px-3 py-1 rounded bg-gray-200">
-            Pengeluaran
-          </button>
-        </div>
-
-        <ul id="transactionList" class="space-y-2"></ul>
-      </div>
+      <ul id="transactionList" class="space-y-2"></ul>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
