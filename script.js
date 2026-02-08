@@ -1,147 +1,197 @@
-/* ===== AUTH ===== */
-const loginPage = document.getElementById("loginPage");
-const dashboardPage = document.getElementById("dashboardPage");
+/*************************
+ * AUTH (LOGIN / LOGOUT)
+ *************************/
 const loginForm = document.getElementById("loginForm");
 const logoutBtn = document.getElementById("logoutBtn");
 
-let currentUser = localStorage.getItem("currentUser");
-let editIndex = null;
+if (loginForm) {
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    if (!username) return;
+    localStorage.setItem("currentUser", username);
+    window.location.href = "dashboard.html";
+  });
+}
 
-/* ===== DASHBOARD ===== */
-const form = document.getElementById("transactionForm");
-const list = document.getElementById("transactionList");
-const balanceEl = document.getElementById("balance");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("currentUser");
+    window.location.href = "index.html";
+  });
+}
 
-let transactions = [];
-let currentFilter = "all";
+/*************************
+ * USER & STORAGE
+ *************************/
+const currentUser = localStorage.getItem("currentUser");
 
-/* Utils */
-function getStorageKey() {
+if (
+  document.body.contains(document.getElementById("balance")) &&
+  !currentUser
+) {
+  window.location.href = "index.html";
+}
+
+function storageKey() {
   return `transactions_${currentUser}`;
 }
 
-function formatRupiah(n) {
+function loadTransactions() {
+  return JSON.parse(localStorage.getItem(storageKey())) || [];
+}
+
+function saveTransactions(data) {
+  localStorage.setItem(storageKey(), JSON.stringify(data));
+}
+
+/*************************
+ * FORMAT
+ *************************/
+function rupiah(num) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     minimumFractionDigits: 0,
-  }).format(n);
+  }).format(num);
 }
 
-/* Auth */
-function checkAuth() {
-  if (currentUser) {
-    loginPage.classList.add("hidden");
-    dashboardPage.classList.remove("hidden");
-    loadTransactions();
-    render();
-  } else {
-    loginPage.classList.remove("hidden");
-    dashboardPage.classList.add("hidden");
-  }
-}
-
-/* Storage */
-function loadTransactions() {
-  transactions = JSON.parse(localStorage.getItem(getStorageKey())) || [];
-}
-
-function saveTransactions() {
-  localStorage.setItem(getStorageKey(), JSON.stringify(transactions));
-}
-
-/* Filter */
-function setFilter(type) {
-  currentFilter = type;
-  render();
-}
-
-/* Render */
-function render() {
-  list.innerHTML = "";
-
-  let balance = 0;
+/*************************
+ * DASHBOARD
+ *************************/
+function renderDashboard() {
+  const data = loadTransactions();
   let income = 0;
   let expense = 0;
 
-  const filtered =
-    currentFilter === "all"
-      ? transactions
-      : transactions.filter(t => t.type === currentFilter);
+  data.forEach((t) => {
+    t.type === "income" ? (income += t.amount) : (expense += t.amount);
+  });
+
+  const balanceEl = document.getElementById("balance");
+  const incomeEl = document.getElementById("totalIncome");
+  const expenseEl = document.getElementById("totalExpense");
+
+  if (balanceEl) balanceEl.textContent = rupiah(income - expense);
+  if (incomeEl) incomeEl.textContent = rupiah(income);
+  if (expenseEl) expenseEl.textContent = rupiah(expense);
+
+  renderChart(income, expense);
+}
+
+/*************************
+ * CHART
+ *************************/
+let financeChart;
+
+function renderChart(income, expense) {
+  const canvas = document.getElementById("financeChart");
+  if (!canvas) return;
+
+  if (financeChart) financeChart.destroy();
+
+  financeChart = new Chart(canvas, {
+    type: "bar",
+    data: {
+      labels: ["Pemasukan", "Pengeluaran"],
+      datasets: [
+        {
+          data: [income, expense],
+          backgroundColor: ["#16a34a", "#dc2626"],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+    },
+  });
+}
+
+/*************************
+ * TRANSAKSI
+ *************************/
+const form = document.getElementById("transactionForm");
+const list = document.getElementById("transactionList");
+
+let activeFilter = "all"; // all | income | expense
+
+function renderTransactions() {
+  if (!list) return;
+
+  const data = loadTransactions();
+  list.innerHTML = "";
+
+  const filtered = data.filter((t) =>
+    activeFilter === "all" ? true : t.type === activeFilter,
+  );
 
   if (filtered.length === 0) {
-    list.innerHTML = `<li class="text-center text-gray-500">Belum ada transaksi</li>`;
+    list.innerHTML = `<li class="text-gray-500">Tidak ada transaksi</li>`;
+    return;
   }
 
   filtered.forEach((t, i) => {
-    if (t.type === "income") {
-      balance += t.amount;
-      income += t.amount;
-    } else {
-      balance -= t.amount;
-      expense += t.amount;
-    }
-
     const li = document.createElement("li");
-    li.className = "flex justify-between items-center border p-2 rounded";
+    li.className = "flex justify-between items-center p-3 border rounded";
 
     li.innerHTML = `
       <div>
         <p class="font-semibold">${t.name}</p>
         <p class="${t.type === "income" ? "text-green-600" : "text-red-600"}">
-          ${formatRupiah(t.amount)}
+          ${t.type === "income" ? "+" : "-"} ${rupiah(t.amount)}
         </p>
       </div>
-      <button onclick="deleteTransaction(${i})" class="text-red-600">
-        Hapus
-      </button>
+      <button onclick="deleteTransaction(${i})"
+        class="text-sm text-red-600">Hapus</button>
     `;
-
     list.appendChild(li);
   });
-
-  balanceEl.textContent = formatRupiah(balance);
-  totalIncome.textContent = formatRupiah(income);
-  totalExpense.textContent = formatRupiah(expense);
 }
 
-/* CRUD */
-function deleteTransaction(i) {
-  transactions.splice(i, 1);
-  saveTransactions();
-  render();
+function deleteTransaction(index) {
+  const data = loadTransactions();
+  data.splice(index, 1);
+  saveTransactions(data);
+  renderDashboard();
+  renderTransactions();
 }
 
-/* Submit */
-form.addEventListener("submit", e => {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const amount = Number(document.getElementById("amount").value);
+    const type = document.getElementById("type").value;
 
-  transactions.push({
-    name: name.value,
-    amount: Number(amount.value),
-    type: type.value,
-    createdAt: Date.now(),
+    if (!name || amount <= 0) return;
+
+    const data = loadTransactions();
+    data.push({ name, amount, type, createdAt: Date.now() });
+    saveTransactions(data);
+
+    form.reset();
+    renderDashboard();
+    renderTransactions();
   });
+}
 
-  saveTransactions();
-  form.reset();
-  render();
+/*************************
+ * TAB FILTER
+ *************************/
+["All", "Income", "Expense"].forEach((type) => {
+  const btn = document.getElementById(`tab${type}`);
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    activeFilter = type.toLowerCase();
+    renderTransactions();
+  });
 });
 
-/* Login */
-loginForm.addEventListener("submit", e => {
-  e.preventDefault();
-  currentUser = username.value.trim();
-  localStorage.setItem("currentUser", currentUser);
-  checkAuth();
-});
-
-/* Logout */
-logoutBtn.addEventListener("click", () => {
-  localStorage.removeItem("currentUser");
-  currentUser = null;
-  checkAuth();
-});
-
-/* Init */
-checkAuth();
+/*************************
+ * INIT
+ *************************/
+renderDashboard();
+renderTransactions();

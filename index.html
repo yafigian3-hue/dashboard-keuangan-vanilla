@@ -1,105 +1,27 @@
 <!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Keuangan</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-<body class="bg-gray-100 min-h-screen">
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <form id="loginForm" class="bg-white p-6 rounded shadow w-80 space-y-4">
+      <h1 class="text-xl font-bold text-center">Login Dashboard</h1>
 
-<!-- LOGIN -->
-<div id="loginPage" class="flex items-center justify-center min-h-screen">
-  <form id="loginForm" class="bg-white p-6 rounded shadow w-80 space-y-4">
-    <h1 class="text-xl font-bold text-center">Login Dashboard</h1>
-    <input id="username" required placeholder="Username"
-      class="border p-2 rounded w-full">
-    <button class="bg-blue-600 text-white w-full py-2 rounded">
-      Login
-    </button>
-  </form>
-</div>
+      <input
+        type="text"
+        id="username"
+        placeholder="Username"
+        class="border p-2 rounded w-full"
+        required
+      />
 
-<!-- DASHBOARD -->
-<div id="dashboardPage" class="hidden min-h-screen flex">
+      <button class="bg-blue-600 text-white w-full py-2 rounded">Login</button>
+    </form>
 
-  <!-- SIDEBAR -->
-  <aside class="w-64 bg-white shadow-lg flex flex-col">
-    <div class="p-6 font-bold text-xl border-b">💰 Keuangan</div>
-
-    <nav class="flex-1 p-4 space-y-2">
-      <div class="px-3 py-2 rounded bg-blue-100 font-semibold">
-        Dashboard
-      </div>
-    </nav>
-
-    <button id="logoutBtn"
-      class="m-4 text-red-600 px-3 py-2 rounded hover:bg-red-50">
-      Logout
-    </button>
-  </aside>
-
-  <!-- CONTENT -->
-  <main class="flex-1 p-6 space-y-6">
-
-    <!-- SALDO -->
-    <div class="bg-white p-4 rounded shadow">
-      <p class="text-gray-500">Saldo Saat Ini</p>
-      <h2 id="balance" class="text-3xl font-bold text-green-600">Rp 0</h2>
-    </div>
-
-    <!-- STAT -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-white p-4 rounded shadow">
-        Total Pemasukan:
-        <span id="totalIncome" class="font-semibold">Rp 0</span>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        Total Pengeluaran:
-        <span id="totalExpense" class="font-semibold">Rp 0</span>
-      </div>
-    </div>
-
-    <!-- FILTER -->
-    <div class="bg-white p-4 rounded shadow flex gap-2">
-      <button onclick="setFilter('all')" class="filter-btn px-3 py-1 border rounded">
-        Semua
-      </button>
-      <button onclick="setFilter('income')" class="filter-btn px-3 py-1 border rounded text-green-600">
-        Pemasukan
-      </button>
-      <button onclick="setFilter('expense')" class="filter-btn px-3 py-1 border rounded text-red-600">
-        Pengeluaran
-      </button>
-    </div>
-
-    <!-- FORM -->
-    <div class="bg-white p-4 rounded shadow">
-      <form id="transactionForm" class="grid grid-cols-1 md:grid-cols-4 gap-3">
-        <input id="name" required placeholder="Nama transaksi"
-          class="border p-2 rounded">
-        <input id="amount" type="number" required placeholder="Jumlah"
-          class="border p-2 rounded">
-        <select id="type" class="border p-2 rounded">
-          <option value="income">Pemasukan</option>
-          <option value="expense">Pengeluaran</option>
-        </select>
-        <button class="bg-blue-600 text-white rounded">
-          Simpan
-        </button>
-      </form>
-    </div>
-
-    <!-- LIST -->
-    <div class="bg-white p-4 rounded shadow">
-      <h3 class="font-semibold mb-3">Riwayat Transaksi</h3>
-      <ul id="transactionList" class="space-y-2"></ul>
-    </div>
-
-  </main>
-</div>
-
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
