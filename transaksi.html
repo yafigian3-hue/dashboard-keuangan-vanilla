@@ -9,18 +9,18 @@
 
   <body class="bg-gray-100 min-h-screen flex">
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-white shadow-lg min-h-screen p-4">
+    <aside
+      id="sidebar"
+      class="w-64 bg-white shadow-lg min-h-screen p-4 hidden md:block fixed md:static z-40"
+    >
       <h1 class="font-bold text-xl mb-6">💰 Keuangan</h1>
 
       <nav class="space-y-2">
-        <a
-          href="dashboard.html"
-          class="block px-3 py-2 rounded hover:bg-gray-100"
-        >
+        <a href="dashboard.html" class="nav-link block px-3 py-2 rounded">
           Dashboard
         </a>
 
-        <a href="transaksi.html" class="block px-3 py-2 rounded bg-blue-100">
+        <a href="transaksi.html" class="nav-link block px-3 py-2 rounded">
           Transaksi
         </a>
 
@@ -36,10 +36,21 @@
     </aside>
 
     <!-- CONTENT -->
-    <main class="flex-1 p-6 space-y-6">
+    <main class="flex-1 p-6 md:ml-0 ml-0 w-full">
+      <!-- MENUBAR -->
+      <button
+        id="toggleSidebar"
+        class="md:hidden mb-4 px-3 py-2 bg-white shadow rounded"
+      >
+        ☰ Menu
+      </button>
+
       <!-- TRANSAKSI -->
       <div class="bg-white p-4 rounded shadow space-y-4">
-        <form id="transactionForm" class="grid grid-cols-4 gap-3">
+        <form
+          id="transactionForm"
+          class="grid grid-cols-1 md:grid-cols-4 gap-3"
+        >
           <input
             id="name"
             placeholder="Nama"

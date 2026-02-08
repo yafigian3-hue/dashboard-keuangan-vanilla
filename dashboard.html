@@ -10,18 +10,18 @@
 
   <body class="bg-gray-100 min-h-screen flex">
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-white shadow-lg min-h-screen p-4">
+    <aside
+      id="sidebar"
+      class="w-64 bg-white shadow-lg min-h-screen p-4 hidden md:block fixed md:static z-40"
+    >
       <h1 class="font-bold text-xl mb-6">💰 Keuangan</h1>
 
       <nav class="space-y-2">
-        <a
-          href="dashboard.html"
-          class="block px-3 py-2 rounded hover:bg-gray-100"
-        >
+        <a href="dashboard.html" class="nav-link block px-3 py-2 rounded">
           Dashboard
         </a>
 
-        <a href="transaksi.html" class="block px-3 py-2 rounded bg-blue-100">
+        <a href="transaksi.html" class="nav-link block px-3 py-2 rounded">
           Transaksi
         </a>
 
@@ -37,7 +37,15 @@
     </aside>
 
     <!-- CONTENT -->
-    <main class="flex-1 p-6 space-y-6">
+    <main class="flex-1 p-6 md:ml-0 ml-0 w-full">
+      <!-- MENUBAR -->
+      <button
+        id="toggleSidebar"
+        class="md:hidden mb-4 px-3 py-2 bg-white shadow rounded"
+      >
+        ☰ Menu
+      </button>
+
       <!-- SALDO -->
       <div class="bg-white p-4 rounded shadow">
         <p class="text-gray-500">Saldo Saat Ini</p>
@@ -46,8 +54,8 @@
 
       <!-- STATISTIK -->
       <div class="bg-white p-4 rounded shadow flex justify-between">
-        <p>Total pemasukan: <span id="totalIncome">Rp 0</span></p>
-        <p>Total pengeluaran: <span id="totalExpense">Rp 0</span></p>
+        <p>Pemasukan : <span id="totalIncome">Rp 0</span></p>
+        <p>Pengeluaran : <span id="totalExpense">Rp 0</span></p>
       </div>
 
       <!-- GRAFIK -->
@@ -56,9 +64,8 @@
         <div class="relative h-64">
           <canvas id="financeChart"></canvas>
         </div>
+        <ul id="transactionList" class="space-y-2"></ul>
       </div>
-
-      <ul id="transactionList" class="space-y-2"></ul>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

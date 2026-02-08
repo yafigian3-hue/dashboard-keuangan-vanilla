@@ -57,6 +57,37 @@ function rupiah(num) {
 }
 
 /*************************
+ * SIDEBAR ACTIVE STATE
+ *************************/
+const navLinks = document.querySelectorAll(".nav-link");
+const currentPage = window.location.pathname.split("/").pop();
+
+navLinks.forEach((link) => {
+  const href = link.getAttribute("href");
+
+  // reset
+  link.classList.remove("bg-blue-100", "font-semibold");
+
+  if (href === currentPage) {
+    link.classList.add("bg-blue-100", "font-semibold");
+  } else {
+    link.classList.add("hover:bg-gray-100");
+  }
+});
+
+/*************************
+ * SIDEBAR TOGGLE (MOBILE)
+ *************************/
+const toggleBtn = document.getElementById("toggleSidebar");
+const sidebar = document.getElementById("sidebar");
+
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("hidden");
+  });
+}
+
+/*************************
  * DASHBOARD
  *************************/
 function renderDashboard() {
