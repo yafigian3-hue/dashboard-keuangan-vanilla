@@ -108,7 +108,7 @@ function renderDashboard() {
   if (incomeEl) incomeEl.textContent = rupiah(income);
   if (expenseEl) expenseEl.textContent = rupiah(expense);
 
-  renderChart(income, expense);
+  renderChart();
 }
 
 /*************************
@@ -116,30 +116,36 @@ function renderDashboard() {
  *************************/
 let financeChart;
 
-function renderChart(income, expense) {
+function renderChart() {
   const canvas = document.getElementById("financeChart");
   if (!canvas) return;
+
+  const data = loadTransactions();
+
+  let income = 0;
+  let expense = 0;
+
+  data.forEach((t) => {
+    if (t.type === "income") income += t.amount;
+    else expense += t.amount;
+  });
 
   if (financeChart) financeChart.destroy();
 
   financeChart = new Chart(canvas, {
-    type: "bar",
+    type: "doughnut",
     data: {
       labels: ["Pemasukan", "Pengeluaran"],
       datasets: [
         {
           data: [income, expense],
           backgroundColor: ["#16a34a", "#dc2626"],
-          borderRadius: 8,
         },
       ],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-      },
     },
   });
 }
@@ -167,7 +173,7 @@ function renderTransactions() {
     return;
   }
 
-  filtered.forEach((t, i) => {
+  filtered.forEach((t, index) => {
     const li = document.createElement("li");
     li.className = "flex justify-between items-center p-3 border rounded";
 
@@ -178,7 +184,7 @@ function renderTransactions() {
           ${t.type === "income" ? "+" : "-"} ${rupiah(t.amount)}
         </p>
       </div>
-      <button onclick="deleteTransaction(${i})"
+      <button onclick="deleteTransaction(${index})"
         class="text-sm text-red-600">Hapus</button>
     `;
     list.appendChild(li);
