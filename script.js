@@ -25,24 +25,12 @@ if (logoutBtn) {
  * USER & STORAGE
  *************************/
 const currentUser = localStorage.getItem("currentUser");
+const currentPage = window.location.pathname.split("/").pop();
 
-if (
-  document.body.contains(document.getElementById("balance")) &&
-  !currentUser
-) {
+const protectedPages = ["dashboard.html", "transaksi.html"];
+
+if (protectedPages.includes(currentPage) && !currentUser) {
   window.location.href = "index.html";
-}
-
-function storageKey() {
-  return `transactions_${currentUser}`;
-}
-
-function loadTransactions() {
-  return JSON.parse(localStorage.getItem(storageKey())) || [];
-}
-
-function saveTransactions(data) {
-  localStorage.setItem(storageKey(), JSON.stringify(data));
 }
 
 /*************************
@@ -60,7 +48,6 @@ function rupiah(num) {
  * SIDEBAR ACTIVE STATE
  *************************/
 const navLinks = document.querySelectorAll(".nav-link");
-const currentPage = window.location.pathname.split("/").pop();
 
 navLinks.forEach((link) => {
   const href = link.getAttribute("href");
@@ -173,7 +160,7 @@ function renderTransactions() {
     return;
   }
 
-  filtered.forEach((t, index) => {
+  filtered.forEach((t) => {
     const li = document.createElement("li");
     li.className = "flex justify-between items-center p-3 border rounded";
 
@@ -184,17 +171,17 @@ function renderTransactions() {
           ${t.type === "income" ? "+" : "-"} ${rupiah(t.amount)}
         </p>
       </div>
-      <button onclick="deleteTransaction(${index})"
+      <button onclick="deleteTransaction(${t.id})"
         class="text-sm text-red-600">Hapus</button>
     `;
     list.appendChild(li);
   });
 }
 
-function deleteTransaction(index) {
+function deleteTransaction(id) {
   const data = loadTransactions();
-  data.splice(index, 1);
-  saveTransactions(data);
+  const newData = data.filter((t) => t.id !== id);
+  saveTransactions(newData);
   renderDashboard();
   renderTransactions();
 }
@@ -209,7 +196,14 @@ if (form) {
     if (!name || amount <= 0) return;
 
     const data = loadTransactions();
-    data.push({ name, amount, type, createdAt: Date.now() });
+    data.push({
+      id: Date.now(),
+      name,
+      amount,
+      type,
+      createdAt: Date.now(),
+    });
+
     saveTransactions(data);
 
     form.reset();
@@ -227,6 +221,19 @@ if (form) {
 
   btn.addEventListener("click", () => {
     activeFilter = type.toLowerCase();
+
+    // Reset semua tombol dulu
+    ["All", "Income", "Expense"].forEach((t) => {
+      const otherBtn = document.getElementById(`tab${t}`);
+      if (!otherBtn) return;
+      otherBtn.classList.remove("bg-blue-600", "text-white");
+      otherBtn.classList.add("bg-gray-100");
+    });
+
+    // Aktifkan tombol yang diklik
+    btn.classList.remove("bg-gray-100");
+    btn.classList.add("bg-blue-600", "text-white");
+
     renderTransactions();
   });
 });
@@ -234,5 +241,7 @@ if (form) {
 /*************************
  * INIT
  *************************/
-renderDashboard();
-renderTransactions();
+document.addEventListener("DOMContentLoaded", () => {
+  renderDashboard();
+  renderTransactions();
+});

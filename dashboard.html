@@ -8,20 +8,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body class="bg-gray-100 min-h-screen flex">
+  <body class="bg-gray-50 min-h-screen flex text-gray-800">
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="w-64 bg-white shadow-lg min-h-screen p-4 hidden md:block fixed md:static z-40"
+      class="w-64 bg-white border-r border-gray-200 p-6 hidden md:block"
     >
-      <h1 class="font-bold text-xl mb-6">💰 Keuangan</h1>
+      <h1 class="font-bold text-2xl mb-8 text-blue-600">💰 Keuangan</h1>
 
-      <nav class="space-y-2">
-        <a href="dashboard.html" class="nav-link block px-3 py-2 rounded">
+      <nav class="space-y-2 text-sm">
+        <a
+          href="dashboard.html"
+          class="nav-link block px-4 py-2 rounded-lg bg-blue-50 text-blue-600 font-medium"
+        >
           Dashboard
         </a>
 
-        <a href="transaksi.html" class="nav-link block px-3 py-2 rounded">
+        <a
+          href="transaksi.html"
+          class="nav-link block px-4 py-2 rounded-lg bg-blue-50 text-blue-600 font-medium"
+        >
           Transaksi
         </a>
 
@@ -29,7 +35,7 @@
 
         <button
           id="logoutBtn"
-          class="w-full text-left px-3 py-2 rounded text-red-600 hover:bg-red-50"
+          class="w-full text-left px-4 py-2 rounded-lg text-red-500 hover:bg-red-50 transition"
         >
           Logout
         </button>
@@ -47,26 +53,30 @@
       </button>
 
       <!-- SUMMARY -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div class="bg-white p-4 rounded shadow">
-          <p class="text-sm text-gray-500">Saldo</p>
-          <p id="balance" class="text-blue-600 text-xl font-bold">Rp0</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+          <p class="text-sm text-gray-400 mb-2">Saldo</p>
+          <p id="balance" class="text-2xl font-bold text-gray-800">Rp0</p>
         </div>
 
-        <div class="bg-white p-4 rounded shadow">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
           <p class="text-sm text-gray-500">Pemasukan</p>
-          <p id="totalIncome" class="text-green-600 text-xl font-bold">Rp0</p>
+          <p id="totalIncome" class="text-2xl font-bold text-green-600">Rp0</p>
         </div>
 
-        <div class="bg-white p-4 rounded shadow">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
           <p class="text-sm text-gray-500">Pengeluaran</p>
-          <p id="totalExpense" class="text-red-600 text-xl font-bold">Rp0</p>
+          <p id="totalExpense" class="text-2xl font-bold text-red-600">Rp0</p>
         </div>
       </div>
 
       <!-- CHART -->
-      <div class="bg-white p-4 rounded shadow h-64">
-        <canvas id="financeChart"></canvas>
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <h3 class="font-semibold mb-4">Ringkasan Keuangan</h3>
+        <div class="h-64">
+          <canvas id="financeChart"></canvas>
+        </div>
+        <ul id="transactionList" class="space-y-3 pt-2"></ul>
       </div>
     </main>
 
