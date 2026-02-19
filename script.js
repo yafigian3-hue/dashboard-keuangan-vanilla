@@ -27,10 +27,23 @@ if (logoutBtn) {
 const currentUser = localStorage.getItem("currentUser");
 const currentPage = window.location.pathname.split("/").pop();
 
-const protectedPages = ["dashboard.html", "transaksi.html"];
-
-if (protectedPages.includes(currentPage) && !currentUser) {
+if (
+  ["dashboard.html", "transaksi.html"].includes(currentPage) &&
+  !currentUser
+) {
   window.location.href = "index.html";
+}
+
+function storageKey() {
+  return "transactions";
+}
+
+function loadTransactions() {
+  return JSON.parse(localStorage.getItem(storageKey())) || [];
+}
+
+function saveTransactions(data) {
+  localStorage.setItem(storageKey(), JSON.stringify(data));
 }
 
 /*************************
@@ -160,7 +173,7 @@ function renderTransactions() {
     return;
   }
 
-  filtered.forEach((t) => {
+  filtered.forEach((t, index) => {
     const li = document.createElement("li");
     li.className = "flex justify-between items-center p-3 border rounded";
 
@@ -171,17 +184,17 @@ function renderTransactions() {
           ${t.type === "income" ? "+" : "-"} ${rupiah(t.amount)}
         </p>
       </div>
-      <button onclick="deleteTransaction(${t.id})"
+      <button onclick="deleteTransaction(${index})"
         class="text-sm text-red-600">Hapus</button>
     `;
     list.appendChild(li);
   });
 }
 
-function deleteTransaction(id) {
+function deleteTransaction(index) {
   const data = loadTransactions();
-  const newData = data.filter((t) => t.id !== id);
-  saveTransactions(newData);
+  data.splice(index, 1);
+  saveTransactions(data);
   renderDashboard();
   renderTransactions();
 }
@@ -196,14 +209,7 @@ if (form) {
     if (!name || amount <= 0) return;
 
     const data = loadTransactions();
-    data.push({
-      id: Date.now(),
-      name,
-      amount,
-      type,
-      createdAt: Date.now(),
-    });
-
+    data.push({ name, amount, type, createdAt: Date.now() });
     saveTransactions(data);
 
     form.reset();
@@ -221,19 +227,6 @@ if (form) {
 
   btn.addEventListener("click", () => {
     activeFilter = type.toLowerCase();
-
-    // Reset semua tombol dulu
-    ["All", "Income", "Expense"].forEach((t) => {
-      const otherBtn = document.getElementById(`tab${t}`);
-      if (!otherBtn) return;
-      otherBtn.classList.remove("bg-blue-600", "text-white");
-      otherBtn.classList.add("bg-gray-100");
-    });
-
-    // Aktifkan tombol yang diklik
-    btn.classList.remove("bg-gray-100");
-    btn.classList.add("bg-blue-600", "text-white");
-
     renderTransactions();
   });
 });
@@ -241,7 +234,5 @@ if (form) {
 /*************************
  * INIT
  *************************/
-document.addEventListener("DOMContentLoaded", () => {
-  renderDashboard();
-  renderTransactions();
-});
+renderDashboard();
+renderTransactions();
