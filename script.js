@@ -90,21 +90,35 @@ if (toggleBtn && sidebar) {
 /*************************
  * DASHBOARD
  *************************/
-function renderDashboard() {
+function calculateSummary() {
   const data = loadTransactions();
+
   let income = 0;
   let expense = 0;
 
-  data.forEach((t) => {
-    if (t.type === "income") income += t.amount;
-    else expense += t.amount;
+  data.forEach((transaction) => {
+    if (transaction.type === "income") {
+      income += transaction.amount;
+    } else {
+      expense += transaction.amount;
+    }
   });
+
+  return {
+    income,
+    expense,
+    balance: income - expense,
+  };
+}
+
+function renderDashboard() {
+  const { income, expense, balance } = calculateSummary();
 
   const balanceEl = document.getElementById("balance");
   const incomeEl = document.getElementById("totalIncome");
   const expenseEl = document.getElementById("totalExpense");
 
-  if (balanceEl) balanceEl.textContent = rupiah(income - expense);
+  if (balanceEl) balanceEl.textContent = rupiah(balance);
   if (incomeEl) incomeEl.textContent = rupiah(income);
   if (expenseEl) expenseEl.textContent = rupiah(expense);
 
@@ -120,15 +134,7 @@ function renderChart() {
   const canvas = document.getElementById("financeChart");
   if (!canvas) return;
 
-  const data = loadTransactions();
-
-  let income = 0;
-  let expense = 0;
-
-  data.forEach((t) => {
-    if (t.type === "income") income += t.amount;
-    else expense += t.amount;
-  });
+  const { income, expense } = calculateSummary();
 
   if (financeChart) financeChart.destroy();
 
@@ -153,23 +159,27 @@ function renderChart() {
 /*************************
  * TRANSAKSI
  *************************/
-const form = document.getElementById("transactionForm");
-const list = document.getElementById("transactionList");
+const transactionForm = document.getElementById("transactionForm");
+const transactionList = document.getElementById("transactionList");
+
+const nameInput = document.getElementById("name");
+const amountInput = document.getElementById("amount");
+const typeInput = document.getElementById("type");
 
 let activeFilter = "all"; // all | income | expense
 
 function renderTransactions() {
-  if (!list) return;
+  if (!transactionList) return;
 
   const data = loadTransactions();
-  list.innerHTML = "";
+  transactionList.innerHTML = "";
 
   const filtered = data.filter((t) =>
     activeFilter === "all" ? true : t.type === activeFilter,
   );
 
   if (filtered.length === 0) {
-    list.innerHTML = `<li class="text-gray-500">Tidak ada transaksi</li>`;
+    transactionList.innerHTML = `<li class="text-gray-500">Tidak ada transaksi</li>`;
     return;
   }
 
@@ -187,7 +197,7 @@ function renderTransactions() {
       <button onclick="deleteTransaction(${index})"
         class="text-sm text-red-600">Hapus</button>
     `;
-    list.appendChild(li);
+    transactionList.appendChild(li);
   });
 }
 
@@ -199,12 +209,12 @@ function deleteTransaction(index) {
   renderTransactions();
 }
 
-if (form) {
-  form.addEventListener("submit", (e) => {
+if (transactionForm) {
+  transactionForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value;
-    const amount = Number(document.getElementById("amount").value);
-    const type = document.getElementById("type").value;
+    const name = nameInput.value;
+    const amount = Number(amountInput.value);
+    const type = typeInput.value;
 
     if (!name || amount <= 0) return;
 
@@ -212,7 +222,7 @@ if (form) {
     data.push({ name, amount, type, createdAt: Date.now() });
     saveTransactions(data);
 
-    form.reset();
+    transactionForm.reset();
     renderDashboard();
     renderTransactions();
   });
