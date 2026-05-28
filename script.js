@@ -175,7 +175,7 @@ function renderTransactions() {
   transactionList.innerHTML = "";
 
   const filtered = data.filter((t) =>
-    activeFilter === "all" ? true : t.type === activeFilter,
+    activeFilter === "all" ? true : transaction.type === activeFilter,
   );
 
   if (filtered.length === 0) {
@@ -183,28 +183,33 @@ function renderTransactions() {
     return;
   }
 
-  filtered.forEach((t, index) => {
+  filtered.forEach((transaction) => {
     const li = document.createElement("li");
     li.className = "flex justify-between items-center p-3 border rounded";
 
     li.innerHTML = `
       <div>
-        <p class="font-semibold">${t.name}</p>
-        <p class="${t.type === "income" ? "text-green-600" : "text-red-600"}">
-          ${t.type === "income" ? "+" : "-"} ${rupiah(t.amount)}
+        <p class="font-semibold">${transaction.name}</p>
+        <p class="${transaction.type === "income" ? "text-green-600" : "text-red-600"}">
+          ${transaction.type === "income" ? "+" : "-"} ${rupiah(transaction.amount)}
         </p>
       </div>
-      <button onclick="deleteTransaction(${index})"
+      <button onclick="deleteTransaction(${transaction.id})"
         class="text-sm text-red-600">Hapus</button>
     `;
     transactionList.appendChild(li);
   });
 }
 
-function deleteTransaction(index) {
+function deleteTransaction(id) {
   const data = loadTransactions();
-  data.splice(index, 1);
-  saveTransactions(data);
+
+  const filteredData = data.filter((transaction) => {
+    return transaction.id !== id;
+  });
+
+  saveTransactions(filteredData);
+
   renderDashboard();
   renderTransactions();
 }
@@ -219,7 +224,7 @@ if (transactionForm) {
     if (!name || amount <= 0) return;
 
     const data = loadTransactions();
-    data.push({ name, amount, type, createdAt: Date.now() });
+    data.push({ id: Date.now(), name, amount, type, createdAt: Date.now() });
     saveTransactions(data);
 
     transactionForm.reset();
