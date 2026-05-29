@@ -175,7 +175,7 @@ function renderTransactions() {
   transactionList.innerHTML = "";
 
   const filtered = data.filter((t) =>
-    activeFilter === "all" ? true : transaction.type === activeFilter,
+    activeFilter === "all" ? true : t.type === activeFilter,
   );
 
   if (filtered.length === 0) {
@@ -185,18 +185,30 @@ function renderTransactions() {
 
   filtered.forEach((transaction) => {
     const li = document.createElement("li");
-    li.className = "flex justify-between items-center p-3 border rounded";
+
+    li.className =
+      "flex justify-between items-center p-4 rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-all duration-300";
 
     li.innerHTML = `
       <div>
-        <p class="font-semibold">${transaction.name}</p>
-        <p class="${transaction.type === "income" ? "text-green-600" : "text-red-600"}">
-          ${transaction.type === "income" ? "+" : "-"} ${rupiah(transaction.amount)}
+        <p class="font-semibold text-gray-800">${transaction.name}</p>
+
+        <p class="${
+          transaction.type === "income" ? "text-green-600" : "text-red-600"
+        } font-medium">
+          ${transaction.type === "income" ? "+" : "-"}
+          ${rupiah(transaction.amount)}
         </p>
       </div>
-      <button onclick="deleteTransaction(${transaction.id})"
-        class="text-sm text-red-600">Hapus</button>
+
+      <button
+        onclick="deleteTransaction(${transaction.id})"
+        class="text-sm px-3 py-1.5 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition"
+      >
+        Hapus
+      </button>
     `;
+
     transactionList.appendChild(li);
   });
 }
@@ -234,6 +246,55 @@ if (transactionForm) {
 }
 
 /*************************
+ * FILTER ACTIVE STATE
+ *************************/
+function updateActiveTab() {
+  const tabs = [
+    document.getElementById("tabAll"),
+    document.getElementById("tabIncome"),
+    document.getElementById("tabExpense"),
+  ];
+
+  tabs.forEach((tab) => {
+    tab.classList.remove(
+      "bg-blue-600",
+      "text-white",
+      "shadow-md",
+      "shadow-blue-200",
+    );
+
+    tab.classList.add("bg-gray-100", "text-gray-700", "hover:bg-gray-200");
+  });
+
+  let activeButton;
+
+  if (activeFilter === "all") {
+    activeButton = document.getElementById("tabAll");
+  }
+
+  if (activeFilter === "income") {
+    activeButton = document.getElementById("tabIncome");
+  }
+
+  if (activeFilter === "expense") {
+    activeButton = document.getElementById("tabExpense");
+  }
+
+  activeButton.classList.remove(
+    "bg-gray-100",
+    "text-gray-700",
+    "hover:bg-gray-200",
+  );
+
+  activeButton.classList.add(
+    "bg-blue-600",
+    "text-white",
+    "shadow-md",
+    "shadow-blue-200",
+  );
+}
+
+/*************************
  * TAB FILTER
  *************************/
 ["All", "Income", "Expense"].forEach((type) => {
@@ -242,6 +303,7 @@ if (transactionForm) {
 
   btn.addEventListener("click", () => {
     activeFilter = type.toLowerCase();
+    updateActiveTab();
     renderTransactions();
   });
 });
@@ -251,3 +313,4 @@ if (transactionForm) {
  *************************/
 renderDashboard();
 renderTransactions();
+updateActiveTab();

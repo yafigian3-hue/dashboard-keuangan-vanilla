@@ -8,43 +8,73 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body class="bg-gray-50 min-h-screen flex text-gray-800">
+  <body
+    class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen flex text-gray-800"
+  >
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="w-64 bg-white border-r border-gray-200 p-6 hidden md:block"
+      class="w-72 bg-white/80 backdrop-blur-xl border-r border-white/20 p-6 hidden md:block"
     >
-      <h1 class="font-bold text-2xl mb-8 text-blue-600">💰 Keuangan</h1>
+      <div class="flex items-center gap-3 mb-10">
+        <div
+          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="w-5 h-5 text-white"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 10.5L12 4l9 6.5v8A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-8z"
+            />
+          </svg>
+        </div>
 
-      <nav class="space-y-2 text-sm">
+        <div>
+          <p class="text-lg font-bold tracking-tight text-gray-800">Keuangan</p>
+
+          <span
+            class="text-xs tracking-[0.2em] uppercase text-gray-400 font-semibold"
+          >
+            Dashboard
+          </span>
+        </div>
+      </div>
+
+      <nav class="space-y-2">
         <a
           href="dashboard.html"
-          class="nav-link block px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300"
         >
           Dashboard
         </a>
 
         <a
           href="transaksi.html"
-          class="nav-link block px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300"
         >
           Transaksi
         </a>
 
-        <hr class="my-4" />
+        <hr class="my-4 border-gray-100" />
 
         <button
           id="logoutBtn"
-          class="w-full text-left px-4 py-2 rounded-lg text-red-500 hover:bg-red-50 transition"
+          class="w-full text-left px-4 py-3 rounded-2xl text-red-500 font-medium hover:bg-red-50 transition-all duration-300"
         >
           Logout
         </button>
       </nav>
     </aside>
 
-    <!-- CONTENT -->
     <main class="flex-1 p-6 md:ml-0 ml-0 w-full">
-      <!-- MENUBAR -->
+
       <button
         id="toggleSidebar"
         class="md:hidden mb-4 px-3 py-2 bg-white shadow rounded"
@@ -52,27 +82,151 @@
         ☰ Menu
       </button>
 
+      <!-- HEADER -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <div class="flex items-center gap-4">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-800">Selamat Datang</h1>
+
+              <p class="text-gray-500 mt-1">
+                Kelola pemasukan dan pengeluaranmu dengan mudah
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hidden md:flex items-center gap-3 bg-white px-4 py-2 rounded-2xl shadow-sm border border-gray-100"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold"
+          >
+            Y
+          </div>
+
+          <div>
+            <p class="text-sm font-semibold">Yafi Gian</p>
+            <p class="text-xs text-gray-400">Personal Account</p>
+          </div>
+        </div>
+      </div>
+
       <!-- SUMMARY -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <p class="text-sm text-gray-400 mb-2">Saldo</p>
-          <p id="balance" class="text-2xl font-bold text-gray-800">Rp0</p>
+        <div
+          class="bg-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-base font-bold text-gray-600">Saldo</p>
+
+            <div
+              class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-6 h-6 text-blue-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 12V7.5A2.5 2.5 0 0018.5 5h-13A2.5 2.5 0 003 7.5v9A2.5 2.5 0 005.5 19h13a2.5 2.5 0 002.5-2.5V12zm0 0h-4.5a1.5 1.5 0 100 3H21"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <p
+            id="balance"
+            class="text-4xl font-bold tracking-tight text-gray-800"
+          >
+            Rp0
+          </p>
         </div>
 
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <p class="text-sm text-gray-500">Pemasukan</p>
-          <p id="totalIncome" class="text-2xl font-bold text-green-600">Rp0</p>
+        <div
+          class="bg-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-base font-bold text-gray-600">Pemasukan</p>
+
+            <div
+              class="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-6 h-6 text-green-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 7.5h5.25v5.25"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <p
+            id="totalIncome"
+            class="text-4xl font-bold tracking-tight text-gray-800"
+          >
+            Rp0
+          </p>
         </div>
 
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <p class="text-sm text-gray-500">Pengeluaran</p>
-          <p id="totalExpense" class="text-2xl font-bold text-red-600">Rp0</p>
+        <div
+          class="bg-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-base font-bold text-gray-600">Pengeluaran</p>
+
+            <div
+              class="w-12 h-12 rounded-2xl bg-red-100 flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-6 h-6 text-red-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 14h6m-6-4h6m2 10l-2-1.5L13 20l-2-1.5L9 20l-2-1.5L5 20V4l2 1.5L9 4l2 1.5L13 4l2 1.5L17 4v16z"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <p
+            id="totalExpense"
+            class="text-4xl font-bold tracking-tight text-gray-800"
+          >
+            Rp0
+          </p>
         </div>
       </div>
 
       <!-- CHART -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h3 class="font-semibold mb-4">Ringkasan Keuangan</h3>
+      <div
+        class="bg-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100"
+      >
+        <h3 class="text-xl font-bold mb-6">Ringkasan Keuangan</h3>
         <div class="h-64">
           <canvas id="financeChart"></canvas>
         </div>

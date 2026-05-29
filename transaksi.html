@@ -4,37 +4,69 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Transaksi</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body class="bg-gray-50 min-h-screen flex text-gray-800">
+  <body
+    class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen flex text-gray-800"
+  >
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="w-64 bg-white border-r border-gray-200 p-6 hidden md:block"
+      class="w-72 bg-white/80 backdrop-blur-xl border-r border-white/20 p-6 hidden md:block"
     >
-      <h1 class="font-bold text-2xl mb-8 text-blue-600">💰 Keuangan</h1>
+      <div class="flex items-center gap-3 mb-10">
+        <div
+          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="w-5 h-5 text-white"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 10.5L12 4l9 6.5v8A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-8z"
+            />
+          </svg>
+        </div>
 
-      <nav class="space-y-2 text-sm">
+        <div>
+          <p class="text-lg font-bold tracking-tight text-gray-800">Keuangan</p>
+
+          <span
+            class="text-xs tracking-[0.2em] uppercase text-gray-400 font-semibold"
+          >
+            Dashboard
+          </span>
+        </div>
+      </div>
+
+      <nav class="space-y-2">
         <a
           href="dashboard.html"
-          class="nav-link block px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300"
         >
           Dashboard
         </a>
 
         <a
           href="transaksi.html"
-          class="nav-link block px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300"
         >
           Transaksi
         </a>
 
-        <hr class="my-4" />
+        <hr class="my-4 border-gray-100" />
 
         <button
           id="logoutBtn"
-          class="w-full text-left px-4 py-2 rounded-lg text-red-500 hover:bg-red-50 transition"
+          class="w-full text-left px-4 py-3 rounded-2xl text-red-500 font-medium hover:bg-red-50 transition-all duration-300"
         >
           Logout
         </button>
@@ -42,40 +74,71 @@
     </aside>
 
     <!-- CONTENT -->
-    <main class="flex-1 p-6 md:ml-0 ml-0 w-full">
-      <!-- MENUBAR -->
+    <main class="flex-1 p-6 w-full">
+      <!-- MOBILE BUTTON -->
       <button
         id="toggleSidebar"
-        class="md:hidden mb-4 px-3 py-2 bg-white shadow rounded"
+        class="md:hidden mb-4 px-4 py-2 bg-white rounded-xl shadow-sm border border-gray-100"
       >
         ☰ Menu
       </button>
 
-      <!-- TRANSAKSI -->
+      <!-- HEADER -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight text-gray-800">
+            Transaksi
+          </h1>
+
+          <p class="text-gray-500 mt-1">
+            Kelola semua pemasukan dan pengeluaranmu
+          </p>
+        </div>
+
+        <!-- PROFILE -->
+        <div
+          class="hidden md:flex items-center gap-3 bg-white px-4 py-2 rounded-2xl shadow-sm border border-gray-100"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold"
+          >
+            Y
+          </div>
+
+          <div>
+            <p class="text-sm font-semibold">Yafi Gian</p>
+            <p class="text-xs text-gray-400">Personal Account</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD -->
       <div
-        class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6"
+        class="bg-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100 space-y-8"
       >
+        <!-- FORM -->
         <form
           id="transactionForm"
           class="grid grid-cols-1 md:grid-cols-4 gap-4"
         >
           <input
             id="name"
-            placeholder="Nama"
-            class="border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none p-3 rounded-xl"
+            placeholder="Nama transaksi"
+            class="bg-gray-50 border border-gray-200 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
             required
           />
+
           <input
             id="amount"
             type="number"
-            placeholder="Jumlah"
-            class="border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none p-3 rounded-xl"
+            placeholder="Jumlah uang"
+            class="bg-gray-50 border border-gray-200 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
             required
           />
 
           <select
             id="type"
-            class="border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none p-3 rounded-xl"
+            class="bg-gray-50 border border-gray-200 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
           >
             <option value="income">Pemasukan</option>
             <option value="expense">Pengeluaran</option>
@@ -83,36 +146,38 @@
 
           <button
             type="submit"
-            class=" px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition"
+            class="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-[1.02] text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg shadow-blue-200"
           >
             Tambah
           </button>
         </form>
 
-        <div class="flex gap-2 pt-2">
+        <!-- FILTER -->
+        <div class="flex flex-wrap gap-3">
           <button
             id="tabAll"
-            class="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium"
+            class="px-5 py-2.5 rounded-2xl bg-blue-600 text-white text-sm font-semibold shadow-md shadow-blue-200 transition-all duration-300"
           >
             Semua
           </button>
 
           <button
             id="tabIncome"
-            class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-sm font-medium"
+            class="px-5 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold transition-all duration-300"
           >
             Pemasukan
           </button>
 
           <button
             id="tabExpense"
-            class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-sm font-medium"
+            class="px-5 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold transition-all duration-300"
           >
             Pengeluaran
           </button>
         </div>
 
-        <ul id="transactionList" class="space-y-3 pt-2"></ul>
+        <!-- LIST -->
+        <ul id="transactionList" class="space-y-4"></ul>
       </div>
     </main>
 
