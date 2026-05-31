@@ -21,4 +21,13 @@ const elements = {
   tabAll: document.getElementById("tabAll"),
   tabIncome: document.getElementById("tabIncome"),
   tabExpense: document.getElementById("tabExpense"),
+
+  // sidebar
+  sidebar: document.getElementById("sidebar"),
+  toggleSidebar: document.getElementById("toggleSidebar"),
+  overlay: document.getElementById("overlay")
 };
+
+console.log(elements.tabAll);
+console.log(elements.tabIncome);
+console.log(elements.tabExpense);

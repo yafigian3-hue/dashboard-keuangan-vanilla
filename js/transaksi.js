@@ -117,10 +117,21 @@ if (elements.transactionList) {
   renderTransactions();
 }
 
-function updateFilterButtons() {
-  const button = [elements.tabAll, elements.tabIncome, elements.tabExpense];
+if (
+  elements.transactionList &&
+  elements.tabAll &&
+  elements.tabIncome &&
+  elements.tabExpense
+) {
+  renderTransactions();
+}
 
-  button.forEach((button) => {
+function updateFilterButtons() {
+  const buttons = [elements.tabAll, elements.tabIncome, elements.tabExpense];
+
+  buttons.forEach((button) => {
+    if (!button) return;
+
     button.classList.remove(
       "bg-blue-600",
       "text-white",
@@ -135,15 +146,13 @@ function updateFilterButtons() {
 
   if (activeFilter === "all") {
     activeButton = elements.tabAll;
-  }
-
-  if (activeFilter === "income") {
+  } else if (activeFilter === "income") {
     activeButton = elements.tabIncome;
-  }
-
-  if (activeFilter === "expense") {
+  } else {
     activeButton = elements.tabExpense;
   }
+
+  if (!activeButton) return;
 
   activeButton.classList.remove(
     "bg-gray-100",

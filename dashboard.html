@@ -14,7 +14,7 @@
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="w-72 bg-white/80 backdrop-blur-xl border-r border-white/20 p-6 hidden md:block"
+      class="fixed top-0 left-0 h-full w-72 bg-white/80 backdrop-blur-xl border-r border-white/20 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative"
     >
       <div class="flex items-center gap-3 mb-10">
         <div
@@ -80,6 +80,11 @@
       >
         ☰ Menu
       </button>
+
+      <div
+        id="overlay"
+        class="fixed inset-0 bg-black/40 hidden z-40 md:hidden"
+      ></div>
 
       <!-- HEADER -->
       <div class="flex items-center justify-between mb-8">
@@ -234,11 +239,12 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <script src="js/storage.js"></script>
+    <script src="js/storage.js"></script>
     <script src="js/format.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/transaksi.js"></script>
+    <script src="js/ui.js"></script>
   </body>
 </html>
