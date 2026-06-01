@@ -61,3 +61,5 @@ function renderChart() {
 if (elements.balance) {
   renderDashboard();
 }
+
+

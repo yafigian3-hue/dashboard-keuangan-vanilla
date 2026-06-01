@@ -14,7 +14,7 @@
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="fixed top-0 left-0 h-full w-72 bg-white/80 backdrop-blur-xl border-r border-white/20 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative"
+      class="fixed top-0 left-0 h-screen w-64 bg-white/80 backdrop-blur-xl border-r border-white/20 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0"
     >
       <div class="flex items-center gap-3 mb-10">
         <div
@@ -50,14 +50,14 @@
       <nav class="space-y-2">
         <a
           href="dashboard.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-gray-100 transition-all duration-300"
         >
           Dashboard
         </a>
 
         <a
           href="transaksi.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-gray-100 transition-all duration-300"
         >
           Transaksi
         </a>
@@ -74,7 +74,7 @@
     </aside>
 
     <!-- CONTENT -->
-    <main class="flex-1 p-6 w-full">
+    <main class="flex-1 p-6 md:ml-64">
       <!-- MOBILE BUTTON -->
       <button
         id="toggleSidebar"
@@ -89,7 +89,9 @@
       ></div>
 
       <!-- HEADER -->
-      <div class="flex items-center justify-between mb-8">
+      <div
+        class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8"
+      >
         <div>
           <h1 class="text-3xl font-bold tracking-tight text-gray-800">
             Transaksi
@@ -127,11 +129,13 @@
           class="grid grid-cols-1 md:grid-cols-4 gap-4"
         >
           <input
-            id="name"
-            placeholder="Nama transaksi"
+            id="category"
+            list="categories"
+            placeholder="Kategori transaksi..."
             class="bg-gray-50 border border-gray-200 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
-            required
           />
+
+          <datalist id="categories"></datalist>
 
           <input
             id="amount"
@@ -151,7 +155,7 @@
 
           <button
             type="submit"
-            class="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-[1.02] text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg shadow-blue-200"
+            class="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl"
           >
             Tambah
           </button>
@@ -159,7 +163,6 @@
 
         <!-- FILTER -->
         <div class="flex items-center gap-2">
-          <!-- Filter -->
           <div class="flex flex-1 gap-2">
             <button
               id="tabAll"

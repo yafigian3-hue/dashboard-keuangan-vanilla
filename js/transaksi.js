@@ -5,6 +5,10 @@ function renderTransactions() {
 
   const data = loadTransactions();
 
+  data.sort((a, b) => {
+    return b.createdAt - a.createdAt;
+  });
+
   const keyword = elements.searchInput
     ? elements.searchInput.value.toLowerCase()
     : "";
@@ -33,12 +37,6 @@ function renderTransactions() {
   }
 
   updateFilterButtons();
-}
-
-if (elements.searchInput) {
-  elements.searchInput.addEventListener("input", () => {
-    renderTransactions();
-  });
 }
 
 function renderTransactionItem(transaction) {
@@ -89,8 +87,10 @@ function deleteTransaction(id) {
 }
 
 function addTransactions() {
-  const name = elements.nameInput.value;
+  const name = elements.categoryInput.value.trim();
+
   const amount = Number(elements.amountInput.value);
+
   const type = elements.typeInput.value;
 
   if (!name || amount <= 0) return;
@@ -109,6 +109,10 @@ function addTransactions() {
 
   elements.transactionForm.reset();
 
+  if (elements.categoryInput) {
+    renderCategories();
+  }
+
   renderTransactions();
 
   if (elements.balance) {
@@ -126,79 +130,4 @@ if (elements.transactionForm) {
 
 if (elements.transactionList) {
   renderTransactions();
-}
-
-if (
-  elements.transactionList &&
-  elements.tabAll &&
-  elements.tabIncome &&
-  elements.tabExpense
-) {
-  renderTransactions();
-}
-
-function updateFilterButtons() {
-  const buttons = [elements.tabAll, elements.tabIncome, elements.tabExpense];
-
-  buttons.forEach((button) => {
-    if (!button) return;
-
-    button.classList.remove(
-      "bg-blue-600",
-      "text-white",
-      "shadow-md",
-      "shadow-blue-200",
-    );
-
-    button.classList.add("bg-gray-100", "text-gray-700", "hover:bg-gray-200");
-  });
-
-  let activeButton;
-
-  if (activeFilter === "all") {
-    activeButton = elements.tabAll;
-  } else if (activeFilter === "income") {
-    activeButton = elements.tabIncome;
-  } else {
-    activeButton = elements.tabExpense;
-  }
-
-  if (!activeButton) return;
-
-  activeButton.classList.remove(
-    "bg-gray-100",
-    "text-gray-700",
-    "hover:bg-gray-200",
-  );
-
-  activeButton.classList.add(
-    "bg-blue-600",
-    "text-white",
-    "shadow-md",
-    "shadow-blue-200",
-  );
-}
-
-if (elements.tabAll) {
-  elements.tabAll.addEventListener("click", () => {
-    activeFilter = "all";
-
-    renderTransactions();
-  });
-}
-
-if (elements.tabIncome) {
-  elements.tabIncome.addEventListener("click", () => {
-    activeFilter = "income";
-
-    renderTransactions();
-  });
-}
-
-if (elements.tabExpense) {
-  elements.tabExpense.addEventListener("click", () => {
-    activeFilter = "expense";
-
-    renderTransactions();
-  });
 }

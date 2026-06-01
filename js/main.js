@@ -13,9 +13,10 @@ const elements = {
   // transaksi
   transactionForm: document.getElementById("transactionForm"),
   transactionList: document.getElementById("transactionList"),
-  nameInput: document.getElementById("name"),
   amountInput: document.getElementById("amount"),
   typeInput: document.getElementById("type"),
+  categoryInput: document.getElementById("category"),
+  categoryList: document.getElementById("categories"),
 
   // filter
   tabAll: document.getElementById("tabAll"),
