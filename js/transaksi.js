@@ -5,12 +5,17 @@ function renderTransactions() {
 
   const data = loadTransactions();
 
-  const filtered = data.filter((transaction) => {
-    if (activeFilter === "all") {
-      return true;
-    }
+  const keyword = elements.searchInput
+    ? elements.searchInput.value.toLowerCase()
+    : "";
 
-    return transaction.type === activeFilter;
+  const filtered = data.filter((transaction) => {
+    const matchFilter =
+      activeFilter === "all" ? true : transaction.type === activeFilter;
+
+    const matchSearch = transaction.name.toLowerCase().includes(keyword);
+
+    return matchFilter && matchSearch;
   });
 
   elements.transactionList.innerHTML = "";
@@ -28,6 +33,12 @@ function renderTransactions() {
   }
 
   updateFilterButtons();
+}
+
+if (elements.searchInput) {
+  elements.searchInput.addEventListener("input", () => {
+    renderTransactions();
+  });
 }
 
 function renderTransactionItem(transaction) {

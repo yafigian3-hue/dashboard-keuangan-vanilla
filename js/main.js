@@ -25,8 +25,25 @@ const elements = {
   // sidebar
   sidebar: document.getElementById("sidebar"),
   toggleSidebar: document.getElementById("toggleSidebar"),
-  overlay: document.getElementById("overlay")
+  overlay: document.getElementById("overlay"),
+
+  // search
+  searchBtn: document.getElementById("searchBtn"),
+  searchInput: document.getElementById("searchInput"),
 };
+
+if (elements.searchBtn && elements.searchInput) {
+  elements.searchBtn.addEventListener("click", () => {
+    elements.searchInput.classList.toggle("hidden");
+
+    if (!elements.searchInput.classList.contains("hidden")) {
+      elements.searchInput.focus();
+    } else {
+      elements.searchInput.value = "";
+      renderTransactions();
+    }
+  });
+}
 
 console.log(elements.tabAll);
 console.log(elements.tabIncome);
