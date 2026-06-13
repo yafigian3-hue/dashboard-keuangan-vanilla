@@ -40,32 +40,44 @@ function renderTransactions() {
 }
 
 function renderTransactionItem(transaction) {
+  const tanggal = new Date(transaction.createdAt).toLocaleDateString("id-ID");
+  const jam = new Date(transaction.createdAt).toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   const li = document.createElement("li");
 
   li.className =
-    "flex justify-between items-center p-4 bg-white border border-gray-100 rounded-2xl";
+    "flex justify-between items-center gap-4 p-4 bg-white border border-gray-100 rounded-2xl";
 
   li.innerHTML = `
-    <div>
-      <p class="font-semibold text-gray-800">
-        ${transaction.name}
-      </p>
+  <div>
+    <p class="font-semibold text-gray-800">
+      ${transaction.name}
+    </p>
 
-      <p class="${
-        transaction.type === "income" ? "text-green-600" : "text-red-600"
-      }">
-        ${transaction.type === "income" ? "+" : "-"}
-        ${rupiah(transaction.amount)}
-      </p>
-    </div>
+    <p class="${
+      transaction.type === "income" ? "text-green-600" : "text-red-600"
+    }">
+      ${transaction.type === "income" ? "+" : "-"}
+      ${rupiah(transaction.amount)}
+    </p>
+  </div>
 
-    <button
-      onclick="deleteTransaction(${transaction.id})"
-      class="text-red-500 hover:text-red-700 text-sm"
-    >
-      Hapus
-    </button>
-  `;
+ <div class="flex flex-col items-end gap-2">
+  <button
+    onclick="deleteTransaction(${transaction.id})"
+    class="text-red-500 hover:text-red-700 text-sm"
+  >
+    Hapus
+  </button>
+
+  <p class="text-xs text-gray-500">
+    ${tanggal} • ${jam}
+  </p>
+</div>
+`;
 
   elements.transactionList.appendChild(li);
 }

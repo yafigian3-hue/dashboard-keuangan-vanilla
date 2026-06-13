@@ -45,7 +45,3 @@ if (elements.searchBtn && elements.searchInput) {
     }
   });
 }
-
-console.log(elements.tabAll);
-console.log(elements.tabIncome);
-console.log(elements.tabExpense);
