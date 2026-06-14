@@ -6,19 +6,26 @@
     <title>Transaksi</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
   </head>
 
   <body
-    class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen flex text-gray-800"
+    class="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 min-h-screen flex text-gray-800 dark:text-white"
   >
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="fixed top-0 left-0 h-screen w-64 bg-white/80 backdrop-blur-xl border-r border-white/20 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0"
+      class="fixed top-0 left-0 h-screen w-64 bg-white/80 dark:bg-gray-900/90 backdrop-blur-xl border-r border-white/20 dark:border-gray-700/50 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 flex flex-col"
     >
+      <!-- LOGO -->
       <div class="flex items-center gap-3 mb-10">
         <div
-          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200"
+          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200 dark:shadow-blue-900"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,42 +42,70 @@
             />
           </svg>
         </div>
-
         <div>
-          <p class="text-lg font-bold tracking-tight text-gray-800">Keuangan</p>
-
-          <span
-            class="text-xs tracking-[0.2em] uppercase text-gray-400 font-semibold"
+          <p
+            class="text-lg font-bold tracking-tight text-gray-800 dark:text-white"
           >
-            Dashboard
-          </span>
+            Keuangan
+          </p>
+          <span
+            class="text-xs tracking-[0.2em] uppercase text-gray-400 dark:text-gray-500 font-semibold"
+            >Dashboard</span
+          >
         </div>
       </div>
 
-      <nav class="space-y-2">
+      <!-- NAV LINKS — flex-1 mendorong bagian bawah ke pinggir -->
+      <nav class="flex-1 space-y-2">
         <a
           href="dashboard.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-gray-100 transition-all duration-300"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
         >
           Dashboard
         </a>
-
         <a
           href="transaksi.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 hover:bg-gray-100 transition-all duration-300"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
         >
           Transaksi
         </a>
+      </nav>
 
-        <hr class="my-4 border-gray-100" />
+      <!-- BOTTOM — dark mode + logout -->
+      <div class="pt-4 border-t border-gray-100 dark:border-gray-700 space-y-1">
+        <button
+          id="themeToggle"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+        >
+          <svg
+            class="w-5 h-5 fill-violet-700 block dark:hidden flex-shrink-0"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            ></path>
+          </svg>
+          <svg
+            class="w-5 h-5 fill-yellow-500 hidden dark:block flex-shrink-0"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span class="dark:hidden">Mode Gelap</span>
+          <span class="hidden dark:block">Mode Terang</span>
+        </button>
 
         <button
           id="logoutBtn"
-          class="w-full text-left px-4 py-3 rounded-2xl text-red-500 font-medium hover:bg-red-50 transition-all duration-300"
+          class="w-full text-left px-4 py-3 rounded-2xl text-red-500 dark:text-red-400 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300"
         >
           Logout
         </button>
-      </nav>
+      </div>
     </aside>
 
     <!-- CONTENT -->
@@ -78,7 +113,7 @@
       <!-- MOBILE BUTTON -->
       <button
         id="toggleSidebar"
-        class="md:hidden mb-4 px-4 py-2 bg-white rounded-xl shadow-sm border border-gray-100"
+        class="md:hidden mb-4 px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-200"
       >
         ☰ Menu
       </button>
@@ -93,35 +128,41 @@
         class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8"
       >
         <div>
-          <h1 class="text-3xl font-bold tracking-tight text-gray-800">
+          <h1
+            class="text-3xl font-bold tracking-tight text-gray-800 dark:text-white"
+          >
             Transaksi
           </h1>
 
-          <p class="text-gray-500 mt-1">
+          <p class="text-gray-500 dark:text-gray-400 mt-1">
             Kelola semua pemasukan dan pengeluaranmu
           </p>
         </div>
 
         <!-- PROFILE -->
         <div
-          class="hidden md:flex items-center gap-3 bg-white px-4 py-2 rounded-2xl shadow-sm border border-gray-100"
+          class="hidden md:flex items-center gap-3 bg-white dark:bg-gray-800 px-4 py-2 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"
         >
           <div
-            class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold"
+            class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold"
           >
             Y
           </div>
 
           <div>
-            <p class="text-sm font-semibold">Yafi Gian</p>
-            <p class="text-xs text-gray-400">Personal Account</p>
+            <p class="text-sm font-semibold text-gray-800 dark:text-white">
+              Yafi Gian
+            </p>
+            <p class="text-xs text-gray-400 dark:text-gray-500">
+              Personal Account
+            </p>
           </div>
         </div>
       </div>
 
       <!-- CARD -->
       <div
-        class="bg-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100 space-y-8"
+        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-gray-100 dark:border-gray-700 space-y-8"
       >
         <!-- FORM -->
         <form
@@ -132,7 +173,7 @@
             id="category"
             list="categories"
             placeholder="Kategori transaksi..."
-            class="bg-gray-50 border border-gray-200 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
+            class="bg-gray-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 border border-gray-200 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-700 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
           />
 
           <datalist id="categories"></datalist>
@@ -141,13 +182,13 @@
             id="amount"
             type="number"
             placeholder="Jumlah uang"
-            class="bg-gray-50 border border-gray-200 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
+            class="bg-gray-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 border border-gray-200 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-700 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
             required
           />
 
           <select
             id="type"
-            class="bg-gray-50 border border-gray-200 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
+            class="bg-gray-50 dark:bg-gray-700 dark:text-white border border-gray-200 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-700 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
           >
             <option value="income">Pemasukan</option>
             <option value="expense">Pengeluaran</option>
@@ -155,7 +196,7 @@
 
           <button
             type="submit"
-            class="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl"
+            class="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl hover:opacity-90 transition-opacity"
           >
             Tambah
           </button>
@@ -166,21 +207,21 @@
           <div class="flex flex-1 gap-2">
             <button
               id="tabAll"
-              class="flex-1 py-2.5 rounded-2xl bg-blue-600 text-white text-xs font-semibold shadow-md shadow-blue-200 transition-all duration-300"
+              class="flex-1 py-2.5 rounded-2xl bg-blue-600 text-white text-xs font-semibold shadow-md shadow-blue-200 dark:shadow-blue-900 transition-all duration-300"
             >
               Semua
             </button>
 
             <button
               id="tabIncome"
-              class="flex-1 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold transition-all duration-300"
+              class="flex-1 py-2.5 rounded-2xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-semibold transition-all duration-300"
             >
               Masuk
             </button>
 
             <button
               id="tabExpense"
-              class="flex-1 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold transition-all duration-300"
+              class="flex-1 py-2.5 rounded-2xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-semibold transition-all duration-300"
             >
               Keluar
             </button>
@@ -189,7 +230,7 @@
           <!-- Search -->
           <button
             id="searchBtn"
-            class="w-11 h-11 flex items-center justify-center rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all duration-300"
+            class="w-11 h-11 flex items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-all duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +253,7 @@
           id="searchInput"
           type="text"
           placeholder="Cari transaksi..."
-          class="hidden mt-3 w-full p-3 rounded-2xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
+          class="hidden mt-3 w-full p-3 rounded-2xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500"
         />
 
         <!-- LIST -->

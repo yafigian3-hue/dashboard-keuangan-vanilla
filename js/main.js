@@ -27,6 +27,7 @@ const elements = {
   sidebar: document.getElementById("sidebar"),
   toggleSidebar: document.getElementById("toggleSidebar"),
   overlay: document.getElementById("overlay"),
+  themeToggleBtn: document.getElementById("themeToggle"),
 
   // search
   searchBtn: document.getElementById("searchBtn"),
@@ -45,3 +46,4 @@ if (elements.searchBtn && elements.searchInput) {
     }
   });
 }
+
