@@ -249,6 +249,10 @@ if (saveTheme === "dark") {
   document.documentElement.classList.add("dark");
 }
 
+if (typeof renderDashboard === "function") {
+  renderDashboard();
+}
+
 if (elements.themeToggleBtn) {
   elements.themeToggleBtn.addEventListener("click", () => {
     if (document.documentElement.classList.contains("dark")) {
@@ -258,6 +262,8 @@ if (elements.themeToggleBtn) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
     }
+
+    renderChart();
   });
 }
 
