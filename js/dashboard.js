@@ -20,6 +20,10 @@ function calculateSummary() {
 }
 
 function renderDashboard() {
+  if (!elements.balance || !elements.totalIncome || !elements.totalExpense) {
+    return;
+  }
+
   const { income, expense, balance } = calculateSummary();
 
   elements.balance.textContent = rupiah(balance);
