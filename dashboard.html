@@ -260,26 +260,56 @@
       <div
         class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm w-full overflow-hidden"
       >
-        <h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-white">
+        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">
           Ringkasan Keuangan
         </h3>
 
-        <div class="flex gap-4 mb-4 text-xs text-gray-500 dark:text-gray-400">
-          <span class="flex items-center gap-1.5">
-            <span
-              class="w-2.5 h-2.5 rounded-sm bg-green-500 inline-block"
-            ></span>
-            Pemasukan
-          </span>
-
-          <span class="flex items-center gap-1.5">
-            <span class="w-2.5 h-2.5 rounded-sm bg-red-400 inline-block"></span>
-            Pengeluaran
-          </span>
+        <div class="mb-4">
+          <select
+            id="monthFilter"
+            class="w-full md:w-52 px-4 py-2 rounded-xl bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200"
+          >
+            <option value="all">Semua Bulan</option>
+            <option value="0">Januari</option>
+            <option value="1">Februari</option>
+            <option value="2">Maret</option>
+            <option value="3">April</option>
+            <option value="4">Mei</option>
+            <option value="5">Juni</option>
+            <option value="6">Juli</option>
+            <option value="7">Agustus</option>
+            <option value="8">September</option>
+            <option value="9">Oktober</option>
+            <option value="10">November</option>
+            <option value="11">Desember</option>
+          </select>
         </div>
 
         <div class="h-64 w-full relative">
           <canvas id="financeChart" class="w-full h-full"></canvas>
+        </div>
+
+        <div class="mt-6">
+          <div class="grid lg:grid-cols-3 gap-6 mt-6">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl p-5">
+              <h4 class="font-semibold mb-4">Kategori Pengeluaran</h4>
+
+              <div class="h-96 relative">
+                <canvas id="expenseCategoryChart"></canvas>
+              </div>
+            </div>
+
+            <div
+              class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-3xl p-5"
+            >
+              <h4 class="font-semibold mb-4">Riwayat Transaksi</h4>
+
+              <ul
+                id="dashboardTransactionList"
+                class="space-y-3 max-h-96 overflow-y-auto pr-2"
+              ></ul>
+            </div>
+          </div>
         </div>
       </div>
     </main>

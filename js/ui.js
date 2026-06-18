@@ -263,7 +263,13 @@ if (elements.themeToggleBtn) {
       localStorage.setItem("theme", "dark");
     }
 
-    renderChart();
+    if (elements.financeChart) {
+      renderChart();
+    }
+
+    if (elements.expenseCategoryChart) {
+      renderExpenseChart();
+    }
   });
 }
 

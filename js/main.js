@@ -9,6 +9,9 @@ const elements = {
   totalIncome: document.getElementById("totalIncome"),
   totalExpense: document.getElementById("totalExpense"),
   financeChart: document.getElementById("financeChart"),
+  monthFilter: document.getElementById("monthFilter"),
+  dashboardTransactionList: document.getElementById("dashboardTransactionList"),
+  expenseCategoryChart: document.getElementById("expenseCategoryChart"),
 
   // transaksi
   transactionForm: document.getElementById("transactionForm"),
@@ -46,4 +49,3 @@ if (elements.searchBtn && elements.searchInput) {
     }
   });
 }
-

@@ -1,5 +1,3 @@
-
-
 function deleteTransaction(id) {
   const data = loadTransactions();
 
@@ -49,5 +47,3 @@ function addTransactions() {
     renderDashboard();
   }
 }
-
-
