@@ -90,11 +90,13 @@ function renderChart() {
   }
 
   const isDark = document.documentElement.classList.contains("dark");
-  const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)";
-  const tickColor = isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.35)";
-  const tooltipBg = isDark ? "#1f2937" : "#ffffff";
-  const tooltipBorder = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)";
-  const tooltipTitle = isDark ? "#f9fafb" : "#111827";
+  const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(16,185,129,0.07)";
+  const tickColor = isDark ? "rgba(255,255,255,0.4)" : "rgba(17,34,28,0.4)";
+  const tooltipBg = isDark ? "#0b1812" : "#ffffff";
+  const tooltipBorder = isDark
+    ? "rgba(255,255,255,0.08)"
+    : "rgba(16,185,129,0.15)";
+  const tooltipTitle = isDark ? "#f9fafb" : "#11221c";
   const tooltipBody = isDark ? "#9ca3af" : "#6b7280";
 
   financeChart = new Chart(elements.financeChart, {
@@ -119,9 +121,9 @@ function renderChart() {
           label: "Pemasukan",
           data: incomeData,
           backgroundColor: isDark
-            ? "rgba(34,197,94,0.7)"
-            : "rgba(34,197,94,0.85)",
-          hoverBackgroundColor: "#22c55e",
+            ? "rgba(16,185,129,0.7)"
+            : "rgba(16,185,129,0.85)",
+          hoverBackgroundColor: "#059669",
           borderRadius: 6,
           borderSkipped: false,
         },
@@ -129,9 +131,9 @@ function renderChart() {
           label: "Pengeluaran",
           data: expenseData,
           backgroundColor: isDark
-            ? "rgba(248,113,113,0.7)"
-            : "rgba(248,113,113,0.85)",
-          hoverBackgroundColor: "#f87171",
+            ? "rgba(244,63,94,0.65)"
+            : "rgba(244,63,94,0.8)",
+          hoverBackgroundColor: "#f43f5e",
           borderRadius: 6,
           borderSkipped: false,
         },
@@ -155,6 +157,7 @@ function renderChart() {
           titleColor: tooltipTitle,
           bodyColor: tooltipBody,
           padding: 10,
+          cornerRadius: 8,
           callbacks: {
             label: (ctx) => " " + ctx.dataset.label + ": " + rupiah(ctx.raw),
           },
@@ -205,19 +208,61 @@ function renderDashboardTransactions() {
 
   filteredData.sort((a, b) => b.createdAt - a.createdAt);
 
+  if (filteredData.length === 0) {
+    const empty = document.createElement("li");
+    empty.className =
+      "flex flex-col items-center justify-center gap-2 py-10 text-center";
+    empty.innerHTML = `
+      <span class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400 dark:text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+          <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+          <line x1="2" y1="10" x2="22" y2="10"></line>
+        </svg>
+      </span>
+      <p class="text-sm font-semibold text-gray-400 dark:text-gray-500">Belum ada transaksi</p>
+    `;
+    elements.dashboardTransactionList.appendChild(empty);
+    return;
+  }
+
   filteredData.forEach((transaction) => {
+    const isIncome = transaction.type === "income";
+
     const li = document.createElement("li");
     li.className =
-      "flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/40";
+      "fade-up group flex items-center justify-between gap-3 p-4 rounded-2xl bg-white/90 dark:bg-ink-900/90 backdrop-blur-sm border border-gray-100 dark:border-white/5 shadow-card hover:-translate-y-0.5 hover:shadow-soft transition-all duration-300";
     li.innerHTML = `
-      <div>
-        <p class="font-medium text-gray-800 dark:text-white">${transaction.name}</p>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          ${transaction.type === "income" ? "Pemasukan" : "Pengeluaran"}
-        </p>
+      <div class="flex items-center gap-3 min-w-0">
+        <span
+          class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
+            isIncome
+              ? "bg-brand-100 dark:bg-brand-500/10 text-brand-600 dark:text-brand-500"
+              : "bg-rose-100 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400"
+          }"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+            ${
+              isIncome
+                ? '<line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline>'
+                : '<line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline>'
+            }
+          </svg>
+        </span>
+
+        <div class="min-w-0">
+          <p class="font-bold text-gray-800 dark:text-white truncate">${transaction.name}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            ${isIncome ? "Pemasukan" : "Pengeluaran"}
+          </p>
+        </div>
       </div>
-      <span class="${transaction.type === "income" ? "text-green-500" : "text-red-500"} font-semibold">
-        ${transaction.type === "income" ? "+" : "-"} ${rupiah(transaction.amount)}
+
+      <span class="flex-shrink-0 font-bold ${
+        isIncome
+          ? "text-brand-600 dark:text-brand-500"
+          : "text-rose-600 dark:text-rose-400"
+      }">
+        ${isIncome ? "+" : "-"} ${rupiah(transaction.amount)}
       </span>
     `;
     elements.dashboardTransactionList.appendChild(li);
@@ -269,24 +314,25 @@ function renderExpenseChart() {
     expenseCategoryChart.destroy();
   }
 
-  // Satu keluarga warna (gradasi merah → krem), bukan campuran warna acak
   const chartColors = [
-    "#e94f4f",
-    "#f0795a",
-    "#f5a36a",
-    "#f7c285",
-    "#fadcae",
-    "#e07a7a",
-    "#f2b8a3",
+    "#f43f5e",
+    "#fb6f84",
+    "#fb923c",
+    "#fbbf6b",
+    "#fcd9a8",
+    "#e11d48",
+    "#fda4af",
   ];
 
   const isDark = document.documentElement.classList.contains("dark");
 
-  const tooltipBg = isDark ? "#111827" : "#ffffff";
-  const tooltipBorder = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)";
-  const tooltipTitle = isDark ? "#f9fafb" : "#111827";
+  const tooltipBg = isDark ? "#0b1812" : "#ffffff";
+  const tooltipBorder = isDark
+    ? "rgba(255,255,255,0.08)"
+    : "rgba(16,185,129,0.12)";
+  const tooltipTitle = isDark ? "#f9fafb" : "#11221c";
   const tooltipBody = isDark ? "#9ca3af" : "#6b7280";
-  const cardBg = isDark ? "#1f2937" : "#ffffff";
+  const cardBg = isDark ? "#0b1812" : "#ffffff";
 
   const centerTextPlugin = {
     id: "centerText",
@@ -301,12 +347,12 @@ function renderExpenseChart() {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      ctx.fillStyle = isDark ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.4)";
-      ctx.font = "500 10px Inter, sans-serif";
+      ctx.fillStyle = isDark ? "rgba(255,255,255,0.45)" : "rgba(17,34,28,0.4)";
+      ctx.font = "600 10px 'Plus Jakarta Sans', sans-serif";
       ctx.fillText("TOTAL PENGELUARAN", centerX, centerY - 14);
 
-      ctx.fillStyle = isDark ? "#f9fafb" : "#111827";
-      ctx.font = "700 16px Inter, sans-serif";
+      ctx.fillStyle = isDark ? "#f9fafb" : "#11221c";
+      ctx.font = "700 16px 'Plus Jakarta Sans', sans-serif";
       ctx.fillText(rupiah(totalExpense), centerX, centerY + 8);
       ctx.restore();
     },
@@ -351,7 +397,7 @@ function renderExpenseChart() {
             boxWidth: 7,
             boxHeight: 7,
             padding: 14,
-            font: { size: 11 },
+            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
           },
         },
 
@@ -374,3 +420,4 @@ function renderExpenseChart() {
     },
   });
 }
+ 

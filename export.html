@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Export</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+  </head>
+  <body
+    class="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 min-h-screen flex text-gray-800 dark:text-white"
+  >
+    <!-- SIDEBAR -->
+    <aside
+      id="sidebar"
+      class="fixed top-0 left-0 h-screen w-64 bg-white/80 dark:bg-gray-900/90 backdrop-blur-xl border-r border-white/20 dark:border-gray-700/50 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 flex flex-col"
+    >
+      <!-- LOGO -->
+      <div class="flex items-center gap-3 mb-10">
+        <div
+          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200 dark:shadow-blue-900"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="w-5 h-5 text-white"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 10.5L12 4l9 6.5v8A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-8z"
+            />
+          </svg>
+        </div>
+        <div>
+          <p
+            class="text-lg font-bold tracking-tight text-gray-800 dark:text-white"
+          >
+            Keuangan
+          </p>
+          <span
+            class="text-xs tracking-[0.2em] uppercase text-gray-400 dark:text-gray-500 font-semibold"
+            >Dashboard</span
+          >
+        </div>
+      </div>
+
+      <!-- NAV LINKS — flex-1 mendorong bagian bawah ke pinggir -->
+      <nav class="flex-1 space-y-2">
+        <a
+          href="dashboard.html"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+        >
+          Dashboard
+        </a>
+        <a
+          href="transaksi.html"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+        >
+          Transaksi
+        </a>
+      </nav>
+
+      <!-- BOTTOM — dark mode + logout -->
+      <div class="pt-4 border-t border-gray-100 dark:border-gray-700 space-y-1">
+        <button
+          id="themeToggle"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+        >
+          <svg
+            class="w-5 h-5 fill-violet-700 block dark:hidden flex-shrink-0"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            ></path>
+          </svg>
+          <svg
+            class="w-5 h-5 fill-yellow-500 hidden dark:block flex-shrink-0"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span class="dark:hidden">Mode Gelap</span>
+          <span class="hidden dark:block">Mode Terang</span>
+        </button>
+
+        <button
+          id="logoutBtn"
+          class="w-full text-left px-4 py-3 rounded-2xl text-red-500 dark:text-red-400 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300"
+        >
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <main class="flex-1 p-6 md:ml-64 w-full overflow-hidden">
+      <button
+        id="toggleSidebar"
+        class="md:hidden mb-6 px-4 py-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm text-gray-800 dark:text-gray-200"
+      >
+        ☰ Menu
+      </button>
+
+      <div
+        id="overlay"
+        class="fixed inset-0 bg-black/40 hidden z-40 md:hidden"
+      ></div>
+
+      <!-- HEADER -->
+      <div
+        class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8"
+      >
+        <div>
+          <div class="flex items-center gap-4">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
+                Selamat Datang
+              </h1>
+
+              <p class="text-gray-500 dark:text-gray-400 mt-1">
+                Kelola pemasukan dan pengeluaranmu dengan mudah
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    
+  </body>
+</html>

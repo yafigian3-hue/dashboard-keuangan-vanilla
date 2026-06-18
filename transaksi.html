@@ -2,30 +2,141 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Transaksi</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <script>
       tailwind.config = {
         darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                50: "#eefdf5",
+                100: "#d6f9e6",
+                500: "#10b981",
+                600: "#059669",
+                700: "#047857",
+              },
+              ink: {
+                800: "#11221c",
+                900: "#0b1812",
+                950: "#060f0b",
+              },
+            },
+            boxShadow: {
+              soft: "0 18px 40px -18px rgba(16,185,129,0.28)",
+              card: "0 1px 2px rgba(16,24,40,0.04), 0 12px 30px -20px rgba(16,24,40,0.25)",
+            },
+          },
+        },
       };
     </script>
+
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      .bg-dots {
+        background-image: radial-gradient(
+          rgba(16, 185, 129, 0.12) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+      }
+      .dark .bg-dots {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        );
+      }
+
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 0;
+        width: 3px;
+        border-radius: 9999px;
+        background: linear-gradient(180deg, #10b981, #059669);
+        transition: height 0.25s ease;
+      }
+      .nav-link.active::before,
+      .nav-link:hover::before {
+        height: 60%;
+      }
+      .nav-link.active {
+        background: rgba(16, 185, 129, 0.1);
+        color: #047857;
+      }
+      .dark .nav-link.active {
+        background: rgba(16, 185, 129, 0.14);
+        color: #6ee7b7;
+      }
+
+      /* Sleek scrollbars */
+      .nice-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      .nice-scroll::-webkit-scrollbar-thumb {
+        background: rgba(16, 185, 129, 0.3);
+        border-radius: 9999px;
+      }
+      .nice-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .fade-up {
+        animation: fadeUp 0.5s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </head>
 
   <body
-    class="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 min-h-screen flex text-gray-800 dark:text-white"
+    class="bg-dots bg-[#f4f7f5] dark:bg-ink-950 min-h-screen flex text-gray-800 dark:text-gray-100 antialiased selection:bg-brand-500/20"
   >
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="fixed top-0 left-0 h-screen w-64 bg-white/80 dark:bg-gray-900/90 backdrop-blur-xl border-r border-white/20 dark:border-gray-700/50 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 flex flex-col"
+      class="fixed top-0 left-0 h-screen w-72 bg-white/85 dark:bg-ink-900/90 backdrop-blur-2xl border-r border-gray-200/70 dark:border-white/5 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 flex flex-col"
     >
       <!-- LOGO -->
       <div class="flex items-center gap-3 mb-10">
         <div
-          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200 dark:shadow-blue-900"
+          class="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-soft"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,52 +144,86 @@
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="currentColor"
-            class="w-5 h-5 text-white"
+            class="w-6 h-6 text-white"
           >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M3 10.5L12 4l9 6.5v8A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-8z"
+              d="M3 13.5L7.5 9l3.5 3.5L21 4m0 0v5m0-5h-5"
             />
           </svg>
+          <span
+            class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-4 ring-white dark:ring-ink-900"
+          ></span>
         </div>
         <div>
           <p
-            class="text-lg font-bold tracking-tight text-gray-800 dark:text-white"
+            class="text-lg font-extrabold tracking-tight text-gray-900 dark:text-white"
           >
             Keuangan
           </p>
           <span
-            class="text-xs tracking-[0.2em] uppercase text-gray-400 dark:text-gray-500 font-semibold"
+            class="text-[10px] tracking-[0.25em] uppercase text-brand-600 dark:text-brand-500 font-bold"
             >Dashboard</span
           >
         </div>
       </div>
 
-      <!-- NAV LINKS — flex-1 mendorong bagian bawah ke pinggir -->
-      <nav class="flex-1 space-y-2">
+      <nav class="flex-1 space-y-1.5">
+        <p
+          class="px-4 mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
+        >
+          Menu
+        </p>
         <a
           href="dashboard.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 flex-shrink-0"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25A2.25 2.25 0 018.25 10.5H6A2.25 2.25 0 013.75 8.25V6zM13.5 6A2.25 2.25 0 0115.75 3.75H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25A2.25 2.25 0 0113.5 8.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25A2.25 2.25 0 0110.5 15.75V18A2.25 2.25 0 018.25 20.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+            />
+          </svg>
           Dashboard
         </a>
         <a
           href="transaksi.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+          class="nav-link active flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 flex-shrink-0"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
+            />
+          </svg>
           Transaksi
         </a>
       </nav>
 
-      <!-- BOTTOM — dark mode + logout -->
-      <div class="pt-4 border-t border-gray-100 dark:border-gray-700 space-y-1">
+      <div class="pt-4 border-t border-gray-200/70 dark:border-white/5 space-y-1">
         <button
           id="themeToggle"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
         >
           <svg
-            class="w-5 h-5 fill-violet-700 block dark:hidden flex-shrink-0"
+            class="w-5 h-5 fill-brand-600 block dark:hidden flex-shrink-0"
             viewBox="0 0 20 20"
           >
             <path
@@ -86,7 +231,7 @@
             ></path>
           </svg>
           <svg
-            class="w-5 h-5 fill-yellow-500 hidden dark:block flex-shrink-0"
+            class="w-5 h-5 fill-yellow-400 hidden dark:block flex-shrink-0"
             viewBox="0 0 20 20"
           >
             <path
@@ -101,108 +246,196 @@
 
         <button
           id="logoutBtn"
-          class="w-full text-left px-4 py-3 rounded-2xl text-red-500 dark:text-red-400 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 dark:text-red-400 font-semibold hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 flex-shrink-0"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+            />
+          </svg>
           Logout
         </button>
       </div>
     </aside>
 
-    <!-- CONTENT -->
-    <main class="flex-1 p-6 md:ml-64">
-      <!-- MOBILE BUTTON -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 md:ml-72 w-full overflow-hidden">
       <button
         id="toggleSidebar"
-        class="md:hidden mb-4 px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-200"
+        class="md:hidden mb-6 inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-ink-900 rounded-2xl border border-gray-200 dark:border-white/5 shadow-card text-gray-800 dark:text-gray-200 font-semibold"
       >
-        ☰ Menu
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+        Menu
       </button>
 
       <div
         id="overlay"
-        class="fixed inset-0 bg-black/40 hidden z-40 md:hidden"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40 md:hidden"
       ></div>
 
       <!-- HEADER -->
       <div
-        class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8"
+        class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8 fade-up"
       >
         <div>
+          <span
+            class="inline-flex items-center gap-1.5 px-3 py-1 mb-3 rounded-full bg-brand-100 dark:bg-brand-500/10 text-brand-700 dark:text-brand-500 text-xs font-bold"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
+            Catatan Aktivitas
+          </span>
           <h1
-            class="text-3xl font-bold tracking-tight text-gray-800 dark:text-white"
+            class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white text-balance"
           >
             Transaksi
           </h1>
 
-          <p class="text-gray-500 dark:text-gray-400 mt-1">
+          <p class="text-gray-500 dark:text-gray-400 mt-1 text-pretty">
             Kelola semua pemasukan dan pengeluaranmu
           </p>
         </div>
-    
       </div>
 
       <!-- CARD -->
       <div
-        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-gray-100 dark:border-gray-700 space-y-8"
+        class="fade-up bg-white/90 dark:bg-ink-900/90 backdrop-blur-sm p-5 sm:p-6 lg:p-8 rounded-[1.75rem] shadow-card border border-gray-100 dark:border-white/5 space-y-8 w-full overflow-hidden"
       >
         <!-- FORM -->
-        <form
-          id="transactionForm"
-          class="grid grid-cols-1 md:grid-cols-4 gap-4"
-        >
-          <input
-            id="category"
-            list="categories"
-            placeholder="Kategori transaksi..."
-            class="bg-gray-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 border border-gray-200 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-700 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
-          />
-
-          <datalist id="categories"></datalist>
-
-          <input
-            id="amount"
-            type="number"
-            placeholder="Jumlah uang"
-            class="bg-gray-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 border border-gray-200 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-700 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
-            required
-          />
-
-          <select
-            id="type"
-            class="bg-gray-50 dark:bg-gray-700 dark:text-white border border-gray-200 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-700 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500 focus:outline-none p-3 rounded-2xl transition-all duration-300"
+        <div>
+          <h3
+            class="text-base sm:text-lg font-extrabold text-gray-900 dark:text-white flex items-center gap-2 mb-4"
           >
-            <option value="income">Pemasukan</option>
-            <option value="expense">Pengeluaran</option>
-          </select>
-
-          <button
-            type="submit"
-            class="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl hover:opacity-90 transition-opacity"
+            <span
+              class="w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-500/10 flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-5 h-5 text-brand-600 dark:text-brand-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+            </span>
+            Tambah Transaksi
+          </h3>
+          <form
+            id="transactionForm"
+            class="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4"
           >
-            Tambah
-          </button>
-        </form>
+            <input
+              id="category"
+              list="categories"
+              placeholder="Kategori transaksi..."
+              class="bg-gray-50 dark:bg-white/5 dark:text-white dark:placeholder-gray-500 border border-gray-200 dark:border-white/10 focus:bg-white dark:focus:bg-white/5 focus:ring-2 focus:ring-brand-500 focus:border-transparent focus:outline-none p-3 rounded-2xl transition-all duration-300"
+            />
+
+            <datalist id="categories"></datalist>
+
+            <input
+              id="amount"
+              type="number"
+              placeholder="Jumlah uang"
+              class="bg-gray-50 dark:bg-white/5 dark:text-white dark:placeholder-gray-500 border border-gray-200 dark:border-white/10 focus:bg-white dark:focus:bg-white/5 focus:ring-2 focus:ring-brand-500 focus:border-transparent focus:outline-none p-3 rounded-2xl transition-all duration-300"
+              required
+            />
+
+            <div class="relative">
+              <select
+                id="type"
+                class="appearance-none w-full bg-gray-50 dark:bg-white/5 dark:text-white border border-gray-200 dark:border-white/10 focus:bg-white dark:focus:bg-white/5 focus:ring-2 focus:ring-brand-500 focus:border-transparent focus:outline-none pl-3 pr-10 py-3 rounded-2xl transition-all duration-300"
+              >
+                <option value="income">Pemasukan</option>
+                <option value="expense">Pengeluaran</option>
+              </select>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="w-4 h-4 text-gray-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </div>
+
+            <button
+              type="submit"
+              class="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-brand-600 to-brand-700 text-white font-bold rounded-2xl shadow-soft hover:-translate-y-0.5 hover:opacity-95 transition-all duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+              Tambah
+            </button>
+          </form>
+        </div>
 
         <!-- FILTER -->
         <div class="flex items-center gap-2">
-          <div class="flex flex-1 gap-2">
+          <div
+            class="flex flex-1 gap-1.5 p-1.5 rounded-2xl bg-gray-100 dark:bg-white/5"
+          >
             <button
               id="tabAll"
-              class="flex-1 py-2.5 rounded-2xl bg-blue-600 text-white text-xs font-semibold shadow-md shadow-blue-200 dark:shadow-blue-900 transition-all duration-300"
+              class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white text-xs font-bold shadow-soft transition-all duration-300"
             >
               Semua
             </button>
 
             <button
               id="tabIncome"
-              class="flex-1 py-2.5 rounded-2xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-semibold transition-all duration-300"
+              class="flex-1 py-2.5 rounded-xl hover:bg-white dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 text-xs font-bold transition-all duration-300"
             >
               Masuk
             </button>
 
             <button
               id="tabExpense"
-              class="flex-1 py-2.5 rounded-2xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-semibold transition-all duration-300"
+              class="flex-1 py-2.5 rounded-xl hover:bg-white dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 text-xs font-bold transition-all duration-300"
             >
               Keluar
             </button>
@@ -211,7 +444,7 @@
           <!-- Search -->
           <button
             id="searchBtn"
-            class="w-11 h-11 flex items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-all duration-300"
+            class="w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-2xl bg-gray-100 dark:bg-white/5 hover:bg-brand-100 dark:hover:bg-brand-500/10 hover:text-brand-700 dark:hover:text-brand-500 text-gray-600 dark:text-gray-300 transition-all duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -234,11 +467,14 @@
           id="searchInput"
           type="text"
           placeholder="Cari transaksi..."
-          class="hidden mt-3 w-full p-3 rounded-2xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:border-blue-500"
+          class="hidden w-full p-3 rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 dark:text-white dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
         />
 
         <!-- LIST -->
-        <ul id="transactionList" class="space-y-4"></ul>
+        <ul
+          id="transactionList"
+          class="nice-scroll space-y-3 max-h-[28rem] overflow-y-auto pr-1"
+        ></ul>
       </div>
     </main>
 

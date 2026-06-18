@@ -9,25 +9,136 @@
     <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <script>
       tailwind.config = {
         darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                50: "#eefdf5",
+                100: "#d6f9e6",
+                500: "#10b981",
+                600: "#059669",
+                700: "#047857",
+              },
+              ink: {
+                800: "#11221c",
+                900: "#0b1812",
+                950: "#060f0b",
+              },
+            },
+            boxShadow: {
+              soft: "0 18px 40px -18px rgba(16,185,129,0.28)",
+              card: "0 1px 2px rgba(16,24,40,0.04), 0 12px 30px -20px rgba(16,24,40,0.25)",
+            },
+          },
+        },
       };
     </script>
+
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+    
+      .bg-dots {
+        background-image: radial-gradient(
+          rgba(16, 185, 129, 0.12) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+      }
+      .dark .bg-dots {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        );
+      }
+
+      /* Active nav highlight + smooth hover */
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 0;
+        width: 3px;
+        border-radius: 9999px;
+        background: linear-gradient(180deg, #10b981, #059669);
+        transition: height 0.25s ease;
+      }
+      .nav-link.active::before,
+      .nav-link:hover::before {
+        height: 60%;
+      }
+      .nav-link.active {
+        background: rgba(16, 185, 129, 0.1);
+        color: #047857;
+      }
+      .dark .nav-link.active {
+        background: rgba(16, 185, 129, 0.14);
+        color: #6ee7b7;
+      }
+
+      /* Sleek scrollbars */
+      .nice-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      .nice-scroll::-webkit-scrollbar-thumb {
+        background: rgba(16, 185, 129, 0.3);
+        border-radius: 9999px;
+      }
+      .nice-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .fade-up {
+        animation: fadeUp 0.5s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </head>
 
   <body
-    class="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 min-h-screen flex text-gray-800 dark:text-white"
+    class="bg-dots bg-[#f4f7f5] dark:bg-ink-950 min-h-screen flex text-gray-800 dark:text-gray-100 antialiased selection:bg-brand-500/20"
   >
     <!-- SIDEBAR -->
     <aside
       id="sidebar"
-      class="fixed top-0 left-0 h-screen w-64 bg-white/80 dark:bg-gray-900/90 backdrop-blur-xl border-r border-white/20 dark:border-gray-700/50 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 flex flex-col"
+      class="fixed top-0 left-0 h-screen w-72 bg-white/85 dark:bg-ink-900/90 backdrop-blur-2xl border-r border-gray-200/70 dark:border-white/5 p-6 z-50 -translate-x-full transition-transform duration-300 md:translate-x-0 flex flex-col"
     >
       <!-- LOGO -->
       <div class="flex items-center gap-3 mb-10">
         <div
-          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200 dark:shadow-blue-900"
+          class="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-soft"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,52 +146,88 @@
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="currentColor"
-            class="w-5 h-5 text-white"
+            class="w-6 h-6 text-white"
           >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M3 10.5L12 4l9 6.5v8A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-8z"
+              d="M3 13.5L7.5 9l3.5 3.5L21 4m0 0v5m0-5h-5"
             />
           </svg>
+          <span
+            class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-4 ring-white dark:ring-ink-900"
+          ></span>
         </div>
         <div>
           <p
-            class="text-lg font-bold tracking-tight text-gray-800 dark:text-white"
+            class="text-lg font-extrabold tracking-tight text-gray-900 dark:text-white"
           >
             Keuangan
           </p>
           <span
-            class="text-xs tracking-[0.2em] uppercase text-gray-400 dark:text-gray-500 font-semibold"
+            class="text-[10px] tracking-[0.25em] uppercase text-brand-600 dark:text-brand-500 font-bold"
             >Dashboard</span
           >
         </div>
       </div>
 
-      <!-- NAV LINKS — flex-1 mendorong bagian bawah ke pinggir -->
-      <nav class="flex-1 space-y-2">
+      <nav class="flex-1 space-y-1.5">
+        <p
+          class="px-4 mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
+        >
+          Menu
+        </p>
         <a
           href="dashboard.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+          class="nav-link active flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 flex-shrink-0"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25A2.25 2.25 0 018.25 10.5H6A2.25 2.25 0 013.75 8.25V6zM13.5 6A2.25 2.25 0 0115.75 3.75H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25A2.25 2.25 0 0113.5 8.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25A2.25 2.25 0 0110.5 15.75V18A2.25 2.25 0 018.25 20.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+            />
+          </svg>
           Dashboard
         </a>
         <a
           href="transaksi.html"
-          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 flex-shrink-0"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
+            />
+          </svg>
           Transaksi
         </a>
       </nav>
 
-      <!-- BOTTOM — dark mode + logout -->
-      <div class="pt-4 border-t border-gray-100 dark:border-gray-700 space-y-1">
+      <div
+        class="pt-4 border-t border-gray-200/70 dark:border-white/5 space-y-1"
+      >
         <button
           id="themeToggle"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
         >
           <svg
-            class="w-5 h-5 fill-violet-700 block dark:hidden flex-shrink-0"
+            class="w-5 h-5 fill-brand-600 block dark:hidden flex-shrink-0"
             viewBox="0 0 20 20"
           >
             <path
@@ -88,7 +235,7 @@
             ></path>
           </svg>
           <svg
-            class="w-5 h-5 fill-yellow-500 hidden dark:block flex-shrink-0"
+            class="w-5 h-5 fill-yellow-400 hidden dark:block flex-shrink-0"
             viewBox="0 0 20 20"
           >
             <path
@@ -103,38 +250,74 @@
 
         <button
           id="logoutBtn"
-          class="w-full text-left px-4 py-3 rounded-2xl text-red-500 dark:text-red-400 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 dark:text-red-400 font-semibold hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 flex-shrink-0"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+            />
+          </svg>
           Logout
         </button>
       </div>
     </aside>
 
-    <main class="flex-1 p-6 md:ml-64 w-full overflow-hidden">
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 md:ml-72 w-full overflow-hidden">
       <button
         id="toggleSidebar"
-        class="md:hidden mb-6 px-4 py-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm text-gray-800 dark:text-gray-200"
+        class="md:hidden mb-6 inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-ink-900 rounded-2xl border border-gray-200 dark:border-white/5 shadow-card text-gray-800 dark:text-gray-200 font-semibold"
       >
-        ☰ Menu
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+        Menu
       </button>
 
       <div
         id="overlay"
-        class="fixed inset-0 bg-black/40 hidden z-40 md:hidden"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40 md:hidden"
       ></div>
 
       <!-- HEADER -->
       <div
-        class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8"
+        class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8 fade-up"
       >
         <div>
           <div class="flex items-center gap-4">
             <div>
-              <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
-                Selamat Datang
+              <span
+                class="inline-flex items-center gap-1.5 px-3 py-1 mb-3 rounded-full bg-brand-100 dark:bg-brand-500/10 text-brand-700 dark:text-brand-500 text-xs font-bold"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
+                Ringkasan Terbaru
+              </span>
+              <h1
+                class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white text-balance"
+              >
+                Selamat Datang 👋
               </h1>
 
-              <p class="text-gray-500 dark:text-gray-400 mt-1">
+              <p class="text-gray-500 dark:text-gray-400 mt-1 text-pretty">
                 Kelola pemasukan dan pengeluaranmu dengan mudah
               </p>
             </div>
@@ -145,21 +328,48 @@
       <!-- SUMMARY -->
       <div class="space-y-5 mb-8">
         <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+          <!-- Card Total Saldo -->
           <div
-            class="col-span-2 md:col-span-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 rounded-3xl shadow-lg overflow-hidden"
+            class="fade-up relative col-span-2 md:col-span-1 bg-gradient-to-br from-brand-600 via-brand-600 to-emerald-700 text-white p-6 rounded-3xl shadow-soft overflow-hidden"
           >
-            <div class="flex justify-between items-center gap-4">
+            <!-- decorative rings -->
+            <svg
+              class="absolute -right-8 -top-8 w-40 h-40 text-white/10"
+              viewBox="0 0 200 200"
+              fill="none"
+            >
+              <circle
+                cx="100"
+                cy="100"
+                r="80"
+                stroke="currentColor"
+                stroke-width="14"
+              />
+              <circle
+                cx="100"
+                cy="100"
+                r="50"
+                stroke="currentColor"
+                stroke-width="14"
+              />
+            </svg>
+            <div class="relative flex justify-between items-start gap-4">
               <div class="min-w-0">
-                <p class="text-blue-100 text-sm font-semibold">Total Saldo</p>
+                <p class="text-brand-100 text-sm font-semibold">Total Saldo</p>
                 <p
                   id="balance"
-                  class="text-2xl sm:text-3xl font-bold mt-1 break-words truncate"
+                  class="text-2xl sm:text-3xl font-extrabold mt-2 break-words truncate"
                 >
                   Rp0
                 </p>
+                <span
+                  class="inline-flex items-center gap-1 mt-3 px-2.5 py-1 rounded-full bg-white/15 text-xs font-semibold"
+                >
+                  Saldo aktif
+                </span>
               </div>
               <div
-                class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0"
+                class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center flex-shrink-0"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -181,14 +391,14 @@
 
           <!-- Card Pemasukan -->
           <div
-            class="bg-white dark:bg-gray-800 p-5 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm min-w-0"
+            class="fade-up group bg-white dark:bg-ink-900 p-5 rounded-3xl border border-gray-100 dark:border-white/5 shadow-card hover:-translate-y-0.5 hover:shadow-soft transition-all duration-300 min-w-0"
           >
             <div class="flex justify-between items-center mb-3">
               <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">
                 Pemasukan
               </p>
               <div
-                class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0"
+                class="w-10 h-10 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -213,7 +423,7 @@
             </div>
             <p
               id="totalIncome"
-              class="text-2xl sm:text-3xl font-bold mt-1 text-gray-800 dark:text-white break-words truncate"
+              class="text-xl sm:text-2xl lg:text-3xl font-extrabold mt-1 text-gray-900 dark:text-white break-words truncate"
             >
               Rp0
             </p>
@@ -221,14 +431,14 @@
 
           <!-- Card Pengeluaran -->
           <div
-            class="bg-white dark:bg-gray-800 p-5 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm min-w-0"
+            class="fade-up group bg-white dark:bg-ink-900 p-5 rounded-3xl border border-gray-100 dark:border-white/5 shadow-card hover:-translate-y-0.5 hover:shadow-soft transition-all duration-300 min-w-0"
           >
             <div class="flex justify-between items-center mb-3">
               <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">
                 Pengeluaran
               </p>
               <div
-                class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0"
+                class="w-10 h-10 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -241,14 +451,19 @@
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M9 14h6m-6-4h6m2 10l-2-1.5L13 20l-2-1.5L9 20l-2-1.5L5 20V4l2 1.5L9 4l2 1.5L13 4l2 1.5L17 4v16z"
+                    d="M2.25 6L9 12.75l4.5-4.5L21.75 16.5"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.5 16.5h5.25v-5.25"
                   />
                 </svg>
               </div>
             </div>
             <p
               id="totalExpense"
-              class="text-2xl sm:text-3xl font-bold mt-1 text-gray-800 dark:text-white break-words truncate"
+              class="text-xl sm:text-2xl lg:text-3xl font-extrabold mt-1 text-gray-900 dark:text-white break-words truncate"
             >
               Rp0
             </p>
@@ -258,55 +473,110 @@
 
       <!-- CHART -->
       <div
-        class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm w-full overflow-hidden"
+        class="fade-up bg-white/90 dark:bg-ink-900/90 backdrop-blur-sm p-5 sm:p-6 lg:p-7 rounded-[1.75rem] border border-gray-100 dark:border-white/5 shadow-card w-full overflow-hidden"
       >
-        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">
-          Ringkasan Keuangan
-        </h3>
-
-        <div class="mb-4">
-          <select
-            id="monthFilter"
-            class="w-full md:w-52 px-4 py-2 rounded-xl bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200"
+        <div
+          class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-5"
+        >
+          <h3
+            class="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white flex items-center gap-2"
           >
-            <option value="all">Semua Bulan</option>
-            <option value="0">Januari</option>
-            <option value="1">Februari</option>
-            <option value="2">Maret</option>
-            <option value="3">April</option>
-            <option value="4">Mei</option>
-            <option value="5">Juni</option>
-            <option value="6">Juli</option>
-            <option value="7">Agustus</option>
-            <option value="8">September</option>
-            <option value="9">Oktober</option>
-            <option value="10">November</option>
-            <option value="11">Desember</option>
-          </select>
+            <span
+              class="w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-500/10 flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-4.5 h-4.5 w-5 h-5 text-brand-600 dark:text-brand-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+                />
+              </svg>
+            </span>
+            Ringkasan Keuangan
+          </h3>
+
+          <div class="relative">
+            <select
+              id="monthFilter"
+              class="appearance-none w-full sm:w-52 pl-4 pr-10 py-2.5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 font-medium focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition"
+            >
+              <option value="all">Semua Bulan</option>
+              <option value="0">Januari</option>
+              <option value="1">Februari</option>
+              <option value="2">Maret</option>
+              <option value="3">April</option>
+              <option value="4">Mei</option>
+              <option value="5">Juni</option>
+              <option value="6">Juli</option>
+              <option value="7">Agustus</option>
+              <option value="8">September</option>
+              <option value="9">Oktober</option>
+              <option value="10">November</option>
+              <option value="11">Desember</option>
+            </select>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-4 h-4 text-gray-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          </div>
         </div>
 
-        <div class="h-64 w-full relative">
+        <div
+          class="h-64 w-full relative rounded-2xl bg-gray-50/60 dark:bg-white/[0.02] p-3 sm:p-4"
+        >
           <canvas id="financeChart" class="w-full h-full"></canvas>
         </div>
 
         <div class="mt-6">
-          <div class="grid lg:grid-cols-3 gap-6 mt-6">
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-5">
-              <h4 class="font-semibold mb-4">Kategori Pengeluaran</h4>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 mt-2">
+            <div
+              class="bg-gray-50/70 dark:bg-white/[0.02] rounded-3xl p-4 sm:p-5 border border-gray-100 dark:border-white/5 min-w-0 overflow-hidden"
+            >
+              <h4
+                class="font-bold mb-4 text-gray-900 dark:text-white flex items-center gap-2"
+              >
+                <span class="w-2 h-2 rounded-full bg-red-400"></span>
+                Kategori Pengeluaran
+              </h4>
 
-              <div class="h-96 relative">
-                <canvas id="expenseCategoryChart"></canvas>
+              <div class="relative w-full h-64 sm:h-72 lg:h-96">
+                <canvas
+                  id="expenseCategoryChart"
+                  class="!w-full !h-full"
+                ></canvas>
               </div>
             </div>
 
             <div
-              class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-3xl p-5"
+              class="lg:col-span-2 bg-gray-50/70 dark:bg-white/[0.02] rounded-3xl p-4 sm:p-5 border border-gray-100 dark:border-white/5 min-w-0 overflow-hidden"
             >
-              <h4 class="font-semibold mb-4">Riwayat Transaksi</h4>
+              <h4
+                class="font-bold mb-4 text-gray-900 dark:text-white flex items-center gap-2"
+              >
+                <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+                Riwayat Transaksi
+              </h4>
 
               <ul
                 id="dashboardTransactionList"
-                class="space-y-3 max-h-96 overflow-y-auto pr-2"
+                class="nice-scroll space-y-3 max-h-72 sm:max-h-80 lg:max-h-96 overflow-y-auto overflow-x-hidden pr-1 sm:pr-2"
               ></ul>
             </div>
           </div>
